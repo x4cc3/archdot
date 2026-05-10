@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-log() { printf "[install] %s\n" "$*"; }
-warn() { printf "[install][warn] %s\n" "$*" >&2; }
-die() { printf "[install][error] %s\n" "$*" >&2; exit 1; }
+log()    { printf "[install] %s\n" "$*"; }
+warn()   { printf "[install][warn] %s\n" "$*" >&2; }
+die()    { printf "[install][error] %s\n" "$*" >&2; exit 1; }
 need_cmd() { command -v "$1" >/dev/null 2>&1 || die "Missing required command: $1"; }
 
+# ── Usage ──────────────────────────────────────────────────────────────
 usage() {
   cat <<'EOF'
 Usage: ./install.sh [options]
@@ -26,52 +27,48 @@ SKIP_SHELL=0
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --dry-run) DRY_RUN=1 ;;
+    --dry-run)       DRY_RUN=1 ;;
     --skip-packages) SKIP_PACKAGES=1 ;;
     --skip-services) SKIP_SERVICES=1 ;;
-    --skip-shell) SKIP_SHELL=1 ;;
-    -h|--help) usage; exit 0 ;;
-    *) die "Unknown option: $1" ;;
+    --skip-shell)    SKIP_SHELL=1 ;;
+    -h|--help)       usage; exit 0 ;;
+    *)               die "Unknown option: $1" ;;
   esac
   shift
 done
 
+# ── Helpers ────────────────────────────────────────────────────────────
 run() {
   if [[ "$DRY_RUN" -eq 1 ]]; then
-    printf '[dry-run] %q ' "$@"
-    printf '\n'
-    return 0
+    printf '[dry-run] %q ' "$@"; printf '\n'; return 0
   fi
   "$@"
 }
 
 run_sudo() {
   if [[ "$DRY_RUN" -eq 1 ]]; then
-    printf '[dry-run] sudo %q ' "$@"
-    printf '\n'
-    return 0
+    printf '[dry-run] sudo %q ' "$@"; printf '\n'; return 0
   fi
   sudo "$@"
 }
 
+# ── Paths ──────────────────────────────────────────────────────────────
 DOTFILES_DIR=$(cd "$(dirname "$0")" && pwd)
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 BACKUP_DIR="$HOME/.config/dotfiles-backups/$TIMESTAMP"
 
+# ── Dotfile linking ────────────────────────────────────────────────────
 backup_target_if_needed() {
-  local target="$1"
-  local desired="$2"
+  local target="$1" desired="$2"
 
-  if [[ ! -e "$target" && ! -L "$target" ]]; then
-    return
-  fi
+  # Nothing to back up if nothing exists
+  [[ ! -e "$target" && ! -L "$target" ]] && return
 
+  # Already the correct symlink
   if [[ -L "$target" ]]; then
     local current
     current=$(readlink "$target") || true
-    if [[ "$current" == "$desired" ]]; then
-      return
-    fi
+    [[ "$current" == "$desired" ]] && return
   fi
 
   run mkdir -p "$BACKUP_DIR"
@@ -80,18 +77,14 @@ backup_target_if_needed() {
 }
 
 link_file() {
-  local src="$1"
-  local dst="$2"
-
+  local src="$1" dst="$2"
   backup_target_if_needed "$dst" "$src"
   run ln -sfn "$src" "$dst"
 }
 
+# ── Preflight ──────────────────────────────────────────────────────────
 preflight() {
-  need_cmd bash
-  need_cmd sudo
-  need_cmd git
-  need_cmd systemctl
+  need_cmd bash sudo git systemctl
 
   if [[ $EUID -eq 0 ]]; then
     die "Run this script as a normal user with sudo privileges, not root."
@@ -113,6 +106,7 @@ preflight() {
   fi
 }
 
+# ── yay ────────────────────────────────────────────────────────────────
 install_yay_if_missing() {
   if command -v yay >/dev/null 2>&1; then
     log "yay is already installed"
@@ -135,12 +129,14 @@ install_yay_if_missing() {
   run rm -rf "$temp_dir"
 }
 
+# ── Packages ───────────────────────────────────────────────────────────
 install_packages() {
   if [[ "$SKIP_PACKAGES" -eq 1 ]]; then
     log "Skipping package installation"
     return
   fi
 
+  # Packages from the official repos
   local pacman_pkgs=(
     git base-devel jq pacman-contrib
     zsh fzf zoxide fastfetch starship
@@ -156,6 +152,7 @@ install_packages() {
     libnotify
   )
 
+  # AUR packages (installed via yay)
   local aur_pkgs=(
     cozette-ttf
     zen-browser-bin
@@ -166,50 +163,37 @@ install_packages() {
     wlogout
   )
 
-  log "Resolving package conflicts..."
-  local resolve_list=()
+  # Resolve known package conflicts before installing.
+  # On Arch, AUR / alternative packages can conflict with our repo targets.
+  # Remove the alternatives so pacman can proceed without interactive prompts.
+  local known_conflicts=(
+    # (to_remove  reason)
+    visual-studio-code-bin  "conflicts with code (pacman)"
+    jack2                   "conflicts with pipewire-jack"
+    rofi                    "conflicts with rofi-wayland"
+    python-pipx             "repo pipx replaced by AUR pipx"
+  )
 
-  # Phase 1: check if any target package conflicts with installed packages
-  for pkg in "${pacman_pkgs[@]}"; do
-    conflicts=$(pacman -Si "$pkg" 2>/dev/null | sed -n 's/^Conflicts With[[:space:]]*: //p')
-    if [[ -n "$conflicts" && "$conflicts" != "None" ]]; then
-      for conflict in $conflicts; do
-        if pacman -Qi "$conflict" &>/dev/null 2>&1; then
-          log "  $conflict conflicts with $pkg - removing"
-          resolve_list+=("$conflict")
-        fi
-      done
+  local i=0
+  while (( i < ${#known_conflicts[@]} )); do
+    local pkg="${known_conflicts[$i]}"
+    local reason="${known_conflicts[$((i+1))]}"
+    if pacman -Qi "$pkg" &>/dev/null 2>&1; then
+      log "Removing $pkg ($reason)"
+      run_sudo pacman -Rdd --noconfirm "$pkg" 2>/dev/null || true
     fi
+    i=$(( i + 2 ))
   done
 
-  # Phase 2: check if any installed package conflicts with our targets
-  # (conflicts can be declared on either side)
-  for installed in $(pacman -Qq 2>/dev/null); do
-    installed_conflicts=$(pacman -Qi "$installed" 2>/dev/null | sed -n 's/^Conflicts With[[:space:]]*: //p')
-    if [[ -n "$installed_conflicts" && "$installed_conflicts" != "None" ]]; then
-      for target in "${pacman_pkgs[@]}"; do
-        if [[ " $installed_conflicts " == *" $target "* ]]; then
-          # check if already in the list
-          already=0
-          for r in "${resolve_list[@]}"; do
-            [[ "$r" == "$installed" ]] && already=1 && break
-          done
-          if [[ $already -eq 0 ]]; then
-            log "  $installed conflicts with $target - removing"
-            resolve_list+=("$installed")
-          fi
-          break
-        fi
-      done
-    fi
-  done
-
-  if [[ "${#resolve_list[@]}" -gt 0 ]]; then
-    run_sudo pacman -Rdd --noconfirm "${resolve_list[@]}"
-  fi
-
+  # Install official repo packages.
+  # yes | handles the "remove conflicting package?" prompt that
+  # pacman --noconfirm deliberately does NOT auto-answer.
   log "Installing official repository packages"
-  run_sudo pacman -Sy --needed --noconfirm "${pacman_pkgs[@]}"
+  if [[ "$DRY_RUN" -eq 1 ]]; then
+    run pacman -Sy --needed --noconfirm "${pacman_pkgs[@]}"
+  else
+    run yes | sudo pacman -Sy --needed --noconfirm "${pacman_pkgs[@]}"
+  fi
 
   install_yay_if_missing
 
@@ -217,8 +201,14 @@ install_packages() {
   run yay -S --needed --noconfirm "${aur_pkgs[@]}"
 }
 
+# ── Deploy dotfiles ────────────────────────────────────────────────────
 deploy_dotfiles() {
-  local config_pkgs=(hypr hyprfloat waybar rofi dunst wlogout swappy scripts apps ghostty fastfetch gtk-3.0 gtk-4.0)
+  local config_pkgs=(
+    hypr hyprfloat waybar rofi dunst wlogout
+    swappy scripts apps ghostty fastfetch
+    gtk-3.0 gtk-4.0
+  )
+
   run mkdir -p "$HOME/.config"
 
   log "Linking config directories into ~/.config"
@@ -230,19 +220,35 @@ deploy_dotfiles() {
     fi
   done
 
-  if [[ -f "$DOTFILES_DIR/starship.toml" ]]; then
-    link_file "$DOTFILES_DIR/starship.toml" "$HOME/.config/starship.toml"
-  fi
+  [[ -f "$DOTFILES_DIR/starship.toml" ]] \
+    && link_file "$DOTFILES_DIR/starship.toml" "$HOME/.config/starship.toml"
 
-  if [[ -f "$DOTFILES_DIR/zsh/.zshrc" ]]; then
-    link_file "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
-  fi
+  [[ -f "$DOTFILES_DIR/zsh/.zshrc" ]] \
+    && link_file "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
 
-  if [[ -f "$DOTFILES_DIR/zsh/.zshenv" ]]; then
-    link_file "$DOTFILES_DIR/zsh/.zshenv" "$HOME/.zshenv"
-  fi
+  [[ -f "$DOTFILES_DIR/zsh/.zshenv" ]] \
+    && link_file "$DOTFILES_DIR/zsh/.zshenv" "$HOME/.zshenv"
 }
 
+# ── Wallpaper ──────────────────────────────────────────────────────────
+deploy_default_wallpaper() {
+  if [[ -f "$HOME/Pictures/default.png" ]]; then
+    log "Default wallpaper already exists at ~/Pictures/default.png"
+    return
+  fi
+
+  local src="$DOTFILES_DIR/wallpapers/1920x1080-dark-linux.png"
+  if [[ ! -f "$src" ]]; then
+    warn "No default wallpaper found in repo wallpapers/"
+    return
+  fi
+
+  run mkdir -p "$HOME/Pictures"
+  run cp "$src" "$HOME/Pictures/default.png"
+  log "Deployed default wallpaper to ~/Pictures/default.png"
+}
+
+# ── Services ───────────────────────────────────────────────────────────
 enable_services() {
   if [[ "$SKIP_SERVICES" -eq 1 ]]; then
     log "Skipping service enablement"
@@ -270,23 +276,7 @@ enable_services() {
   done
 }
 
-deploy_default_wallpaper() {
-  if [[ -f "$HOME/Pictures/default.png" ]]; then
-    log "Default wallpaper already exists at ~/Pictures/default.png"
-    return
-  fi
-
-  local src="$DOTFILES_DIR/wallpapers/1920x1080-dark-linux.png"
-  if [[ ! -f "$src" ]]; then
-    warn "No default wallpaper found in repo wallpapers/"
-    return
-  fi
-
-  run mkdir -p "$HOME/Pictures"
-  run cp "$src" "$HOME/Pictures/default.png"
-  log "Deployed default wallpaper to ~/Pictures/default.png"
-}
-
+# ── Shell ──────────────────────────────────────────────────────────────
 set_default_shell() {
   if [[ "$SKIP_SHELL" -eq 1 ]]; then
     log "Skipping shell change"
@@ -311,6 +301,7 @@ set_default_shell() {
   chsh -s "$zsh_path"
 }
 
+# ── Postflight ─────────────────────────────────────────────────────────
 postflight() {
   cat <<EOF
 
@@ -328,6 +319,7 @@ Backup location for replaced files:
 EOF
 }
 
+# ── Main ───────────────────────────────────────────────────────────────
 main() {
   log "Using dotfiles directory: $DOTFILES_DIR"
   preflight
