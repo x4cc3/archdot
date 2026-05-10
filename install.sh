@@ -226,7 +226,7 @@ install_packages() {
 
 deploy_dotfiles() {
   local config_dirs=(
-    hypr hyprfloat waybar rofi dunst wlogout swappy scripts apps ghostty fastfetch gtk-3.0 gtk-4.0
+    hypr hyprfloat waybar rofi dunst wlogout swappy scripts apps ghostty fastfetch gtk-4.0
   )
 
   run mkdir -p "$HOME/.config"
@@ -241,6 +241,8 @@ deploy_dotfiles() {
   link_path "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
   link_path "$DOTFILES_DIR/zsh/.zshenv" "$HOME/.zshenv"
 
+  deploy_gtk3_config
+
   check_link "$DOTFILES_DIR/hypr" "$HOME/.config/hypr"
   check_link "$DOTFILES_DIR/waybar" "$HOME/.config/waybar"
   check_link "$DOTFILES_DIR/rofi" "$HOME/.config/rofi"
@@ -248,6 +250,38 @@ deploy_dotfiles() {
   if [[ -d "$DOTFILES_DIR/scripts" ]]; then
     run find "$DOTFILES_DIR/scripts" -type f -name '*.sh' -exec chmod +x {} +
   fi
+}
+
+deploy_gtk3_config() {
+  local src="$DOTFILES_DIR/gtk-3.0"
+  local dst="$HOME/.config/gtk-3.0"
+
+  [[ -d "$src" ]] || { warn "Missing GTK 3 source: $src"; return 0; }
+
+  if (( DRY_RUN )); then
+    log "[dry-run] Would copy GTK 3 settings and normalize bookmarks for user home"
+    log "[dry-run] mkdir -p $dst"
+    log "[dry-run] cp -a $src/. $dst/"
+    if [[ -f "$src/bookmarks" ]]; then
+      log "[dry-run] render bookmarks from $src/bookmarks to $dst/bookmarks with home=$HOME"
+    fi
+    return 0
+  fi
+
+  backup_target_if_needed "$dst" "$src"
+  run mkdir -p "$dst"
+
+  # Use a real directory so bookmark URIs can be made user-specific.
+  run cp -a "$src/." "$dst/"
+
+  if [[ -f "$src/bookmarks" ]]; then
+    local tmp
+    tmp="${dst}/.bookmarks.tmp"
+    awk -v home="$HOME" '{gsub(/^file:\/\/\/home\/[^\/]+/, "file://" home, $0); print}' "$src/bookmarks" > "$tmp"
+    run mv -f "$tmp" "$dst/bookmarks"
+  fi
+
+  log "Configured $dst"
 }
 
 deploy_default_wallpaper() {
