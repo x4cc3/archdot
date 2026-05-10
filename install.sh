@@ -159,7 +159,7 @@ install_packages() {
     zsh fzf zoxide fastfetch starship
     go rustup npm rbenv python python-pipx
     hyprland hypridle hyprlock
-    waybar rofi-wayland wl-clipboard cliphist dunst
+    waybar rofi wl-clipboard cliphist dunst
     polkit-gnome xdg-desktop-portal-hyprland xdg-desktop-portal xdg-desktop-portal-gtk
     qt5-wayland qt6-wayland
     pipewire pipewire-alsa pipewire-pulse wireplumber pavucontrol playerctl
@@ -170,7 +170,6 @@ install_packages() {
   )
 
   local aur_pkgs=(
-    cozette-ttf
     zen-browser-bin
     webcord
     caffeine-ng
@@ -182,34 +181,47 @@ install_packages() {
     pacman_pkgs+=(ly)
   fi
 
-  # Known conflicting packages that pacman --noconfirm will not auto-remove.
-  # Remove them explicitly before installing our targets.
-  local known_conflicts=(
-    visual-studio-code-bin
-    jack2
-    rofi
-  )
+  # Remove packages that conflict with our targets.
+  # --noconfirm does NOT auto-answer "remove conflicting package?" prompts.
+  # Note: rofi is NOT listed here — modern Arch merged rofi-wayland into rofi.
   local pkg
-  for pkg in "${known_conflicts[@]}"; do
+  for pkg in visual-studio-code-bin jack2; do
     if pacman -Qi "$pkg" &>/dev/null 2>&1; then
       log "Removing conflicting package: $pkg"
-      run_sudo pacman -R --noconfirm "$pkg" 2>/dev/null || true
+      run_sudo pacman -Rdd --noconfirm "$pkg" 2>/dev/null || true
     fi
   done
 
-  log "Installing official packages"
-  if (( DRY_RUN )); then
-    run pacman -Syu --needed --noconfirm "${pacman_pkgs[@]}"
+  local avail_pacman_pkgs=()
+  local p
+  for p in "${pacman_pkgs[@]}"; do
+    if pacman -Si "$p" &>/dev/null; then
+      avail_pacman_pkgs+=("$p")
+    else
+      warn "Skipping unknown pacman package: $p"
+    fi
+  done
+
+  if (( ${#avail_pacman_pkgs[@]} > 0 )); then
+    log "Installing official packages"
+    if (( DRY_RUN )); then
+      run pacman -Sy --needed --noconfirm "${avail_pacman_pkgs[@]}"
+    else
+      run sudo pacman -Sy --needed --noconfirm "${avail_pacman_pkgs[@]}"
+    fi
   else
-    # yes | handles "remove conflicting package?" prompts that
-    # pacman --noconfirm deliberately does NOT auto-answer.
-    run yes | sudo pacman -Syu --needed --noconfirm "${pacman_pkgs[@]}"
+    warn "No official packages to install"
   fi
 
-  install_yay_if_missing
+  if ! install_yay_if_missing; then
+    warn "Skipping AUR package install (yay installation failed or unavailable)."
+    return 0
+  fi
 
-  log "Installing AUR packages"
-  run yay -S --needed --noconfirm "${aur_pkgs[@]}"
+  if (( ${#aur_pkgs[@]} > 0 )); then
+    log "Installing AUR packages"
+    run yay -S --needed --noconfirm "${aur_pkgs[@]}" || warn "Some AUR packages failed to install"
+  fi
 }
 
 deploy_dotfiles() {
@@ -229,6 +241,10 @@ deploy_dotfiles() {
   link_path "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
   link_path "$DOTFILES_DIR/zsh/.zshenv" "$HOME/.zshenv"
 
+  check_link "$DOTFILES_DIR/hypr" "$HOME/.config/hypr"
+  check_link "$DOTFILES_DIR/waybar" "$HOME/.config/waybar"
+  check_link "$DOTFILES_DIR/rofi" "$HOME/.config/rofi"
+
   if [[ -d "$DOTFILES_DIR/scripts" ]]; then
     run find "$DOTFILES_DIR/scripts" -type f -name '*.sh' -exec chmod +x {} +
   fi
@@ -246,6 +262,16 @@ deploy_default_wallpaper() {
   log "Installed default wallpaper to $dst"
 }
 
+check_link() {
+  local src="$1"
+  local dst="$2"
+
+  if [[ -L "$dst" ]] && [[ "$(readlink -f -- "$dst")" == "$(realpath -- "$src")" ]]; then
+    log "Linked $dst -> $src"
+  else
+    warn "$dst is not linked to $src"
+  fi
+}
 enable_services() {
   (( SKIP_SERVICES )) && { log "Skipping service enablement"; return 0; }
 
@@ -308,7 +334,7 @@ EOF
 
 main() {
   preflight
-  install_packages
+  install_packages || warn "Package installation had errors; continuing with configuration deployment."
   deploy_dotfiles
   deploy_default_wallpaper
   enable_services
