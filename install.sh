@@ -166,6 +166,48 @@ install_packages() {
     wlogout
   )
 
+  log "Resolving package conflicts..."
+  local resolve_list=()
+
+  # Phase 1: check if any target package conflicts with installed packages
+  for pkg in "${pacman_pkgs[@]}"; do
+    conflicts=$(pacman -Si "$pkg" 2>/dev/null | sed -n 's/^Conflicts With[[:space:]]*: //p')
+    if [[ -n "$conflicts" && "$conflicts" != "None" ]]; then
+      for conflict in $conflicts; do
+        if pacman -Qi "$conflict" &>/dev/null 2>&1; then
+          log "  $conflict conflicts with $pkg - removing"
+          resolve_list+=("$conflict")
+        fi
+      done
+    fi
+  done
+
+  # Phase 2: check if any installed package conflicts with our targets
+  # (conflicts can be declared on either side)
+  for installed in $(pacman -Qq 2>/dev/null); do
+    installed_conflicts=$(pacman -Qi "$installed" 2>/dev/null | sed -n 's/^Conflicts With[[:space:]]*: //p')
+    if [[ -n "$installed_conflicts" && "$installed_conflicts" != "None" ]]; then
+      for target in "${pacman_pkgs[@]}"; do
+        if [[ " $installed_conflicts " == *" $target "* ]]; then
+          # check if already in the list
+          already=0
+          for r in "${resolve_list[@]}"; do
+            [[ "$r" == "$installed" ]] && already=1 && break
+          done
+          if [[ $already -eq 0 ]]; then
+            log "  $installed conflicts with $target - removing"
+            resolve_list+=("$installed")
+          fi
+          break
+        fi
+      done
+    fi
+  done
+
+  if [[ "${#resolve_list[@]}" -gt 0 ]]; then
+    run_sudo pacman -Rdd --noconfirm "${resolve_list[@]}"
+  fi
+
   log "Installing official repository packages"
   run_sudo pacman -Sy --needed --noconfirm "${pacman_pkgs[@]}"
 
