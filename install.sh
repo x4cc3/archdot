@@ -148,7 +148,7 @@ install_packages() {
     ly
     hyprland hypridle hyprlock waybar rofi-wayland wl-clipboard cliphist dunst polkit-gnome
     xdg-desktop-portal-hyprland xdg-desktop-portal xdg-desktop-portal-gtk qt5-wayland qt6-wayland
-    pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber pavucontrol playerctl
+    pipewire pipewire-alsa pipewire-pulse wireplumber pavucontrol playerctl
     network-manager-applet blueman
     ghostty firefox thunar code spotify-launcher
     ttf-jetbrains-mono-nerd ttf-fira-code ttf-font-awesome noto-fonts-emoji papirus-icon-theme
