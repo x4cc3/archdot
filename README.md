@@ -1,99 +1,77 @@
 # Dotfiles
 
-Personal desktop configuration for Hyprland on Arch Linux.
+Personal Hyprland setup for Arch Linux.
 
-## Contents
+## Install (quick)
 
-### Window Manager & UI
-- `hypr/` — Hyprland core configs (`hyprland.conf`, `conf/*.conf`, `hyprlock.conf`, `hypridle.conf`)
-- `hyprfloat/` — floating rules for terminals
-- `waybar/` — status bar configuration, styles, modules
-- `rofi/` — launchers, powermenu themes, applets
-- `dunst/` — notification daemon
-- `wlogout/` — logout menu
-
-### Shell & Terminal
-- `zsh/` — zsh configuration (`.zshrc`, `.zshenv`) with zinit plugin manager
-- `ghostty/` — Ghostty terminal emulator config
-- `starship.toml` — prompt configuration
-
-### Appearance
-- `gtk-3.0/` — GTK3 theme settings
-- `gtk-4.0/` — GTK4 theme settings
-- `fastfetch/` — system info display config
-
-### Utilities
-- `swappy/` — screenshot editing tool
-- `scripts/` — helper scripts (clipboard, wallpaper, screenshots, etc.)
-- `apps/` — optional tool configs
-- `wallpapers/` — wallpaper assets
-
-## Setup
-
-### Quick install (Arch/Arch-based)
 ```bash
-cd ~/.config/dotfiles   # or wherever you cloned
+# clone anywhere
+git clone https://github.com/x4cc3/dotfiles-for-my-arch-linux-.git
+cd dotfiles-for-my-arch-linux-
 chmod +x install.sh
 ./install.sh
 ```
 
-Safe first pass:
+Run as a normal user (with `sudo`), never as root.
+
+### Useful options
+
 ```bash
-./install.sh --dry-run
+./install.sh --dry-run       # preview actions
+./install.sh --skip-packages  # config only
+./install.sh --skip-services  # skip service enablement
+./install.sh --skip-shell     # skip default shell change
+./install.sh --enable-ly      # enable ly display manager
 ```
 
-The script automatically:
-- Installs `yay` (AUR helper) if missing
-- Installs packages via `pacman` and `yay`
-- Links configuration directories into `~/.config`
-- Links shell configs to `$HOME`
-- Enables system services (ly, NetworkManager, bluetooth)
-- Sets zsh as default shell
+## What gets installed
 
-**Note:** Run as a normal user with `sudo` privileges. Do not run as root.
+- Hyprland + core tools (`hypr`, `hyprfloat`, `waybar`, `rofi`, `dunst`, `wlogout`, `swappy`)
+- Terminal/shell setup (`ghostty`, `zsh`, `starship`, prompt env)
+- Appearance (`gtk-3.0`, `gtk-4.0`, `fastfetch`, `wallpapers`)
+- Utility scripts
+- Optional AUR tools (`yay` helper, `zen-browser-bin`, `webcord`, `caffeine-ng`, `wlogout`, `awww`)
 
-### Manual linking (no installer)
+## Install behavior
+
+- Links config folders into `~/.config`
+- Links shell files to `~/.zshrc` and `~/.zshenv`
+- Deploys GTK3 config as files (with home-specific bookmark paths)
+- Copies default wallpaper to `~/Pictures/default.png` if missing
+- Optionally enables `NetworkManager`, `bluetooth`, and (optionally) `ly`
+- Sets `zsh` as default shell unless `--skip-shell`
+
+## Verify
+
 ```bash
-cd ~/.config/dotfiles
+readlink -f ~/.config/hypr
+ls -la ~/.config/hypr
+hyprctl version
+```
+
+If `~/.config/hypr` is not a symlink to the repo path, rerun `./install.sh`.
+
+## Manual restore (optional)
+
+```bash
+cd dotfiles-for-my-arch-linux-
+./install.sh --skip-packages
+```
+
+Or manually link a few key directories:
+
+```bash
 ln -sfn "$PWD/hypr" "$HOME/.config/hypr"
-ln -sfn "$PWD/hyprfloat" "$HOME/.config/hyprfloat"
 ln -sfn "$PWD/waybar" "$HOME/.config/waybar"
 ln -sfn "$PWD/rofi" "$HOME/.config/rofi"
-ln -sfn "$PWD/dunst" "$HOME/.config/dunst"
-ln -sfn "$PWD/wlogout" "$HOME/.config/wlogout"
-ln -sfn "$PWD/swappy" "$HOME/.config/swappy"
-ln -sfn "$PWD/scripts" "$HOME/.config/scripts"
-ln -sfn "$PWD/apps" "$HOME/.config/apps"
-ln -sfn "$PWD/ghostty" "$HOME/.config/ghostty"
-ln -sfn "$PWD/fastfetch" "$HOME/.config/fastfetch"
-ln -sfn "$PWD/gtk-3.0" "$HOME/.config/gtk-3.0"
-ln -sfn "$PWD/gtk-4.0" "$HOME/.config/gtk-4.0"
-ln -sf $PWD/starship.toml $HOME/.config/starship.toml
-ln -sf $PWD/zsh/.zshrc $HOME/.zshrc
-ln -sf $PWD/zsh/.zshenv $HOME/.zshenv
+ln -sfn "$PWD/zsh/.zshrc" "$HOME/.zshrc"
+ln -sfn "$PWD/zsh/.zshenv" "$HOME/.zshenv"
 ```
 
-### Manual symlinks
+## Restore path (if needed)
+
+Any previous config directories are backed up under:
+
 ```bash
-ln -s $PWD/hypr ~/.config/hypr
-ln -s $PWD/waybar ~/.config/waybar
-ln -s $PWD/rofi ~/.config/rofi
-ln -s $PWD/ghostty ~/.config/ghostty
-ln -s $PWD/zsh/.zshrc ~/.zshrc
-# ... etc
+~/.config/dotfiles-backups/<timestamp>/
 ```
-
-## Key Features
-
-- **Hyprland** with NVIDIA optimizations, Oxocarbon theme
-- **Ghostty** terminal with Oxocarbon palette, JetBrainsMono Nerd Font
-- **Zsh** with zinit, syntax highlighting, autosuggestions, fzf-tab
-- **Starship** Oxocarbon-colored prompt
-- **Waybar** with system stats, updates, keyboard layout
-- **Rofi** with Oxocarbon color scheme
-
-
-## Restoring
-1. Clone your repo
-2. Run `./install.sh` or use Stow/symlinks
-3. Log out/in or restart Hyprland to apply
