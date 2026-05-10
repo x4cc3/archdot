@@ -144,7 +144,7 @@ install_packages() {
   local pacman_pkgs=(
     git base-devel jq pacman-contrib
     zsh fzf zoxide fastfetch starship
-    go rustup npm rbenv pipx python
+    go rustup npm rbenv python
     ly
     hyprland hypridle hyprlock waybar rofi-wayland wl-clipboard cliphist dunst polkit-gnome
     xdg-desktop-portal-hyprland xdg-desktop-portal xdg-desktop-portal-gtk qt5-wayland qt6-wayland
@@ -152,7 +152,7 @@ install_packages() {
     network-manager-applet blueman
     ghostty firefox thunar code spotify-launcher
     ttf-jetbrains-mono-nerd ttf-fira-code ttf-font-awesome noto-fonts-emoji papirus-icon-theme
-    wlogout swappy grim slurp imagemagick qalculate-gtk xclip brightnessctl
+    swappy grim slurp imagemagick qalculate-gtk xclip brightnessctl
     libnotify
   )
 
@@ -162,6 +162,8 @@ install_packages() {
     webcord
     caffeine-ng
     awww
+    pipx
+    wlogout
   )
 
   log "Installing official repository packages"
