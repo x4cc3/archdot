@@ -15,6 +15,7 @@ zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
+zinit light andreacasarin/zsh-ask-opencode
 
 export NVM_COMPLETION=true
 export NVM_SYMLINK_CURRENT="true"
@@ -28,6 +29,7 @@ zinit snippet OMZP::archlinux
 zinit snippet OMZP::command-not-found
 
 # Load completions
+fpath=("$HOME/.zsh/completions" $fpath)
 autoload -Uz compinit && compinit
 
 zinit cdreplay -q
@@ -122,6 +124,7 @@ eval "$(zoxide init --cmd cd zsh)"
 precmd() { precmd() { echo "" } }
 alias clear="precmd() { precmd() { echo } } && clear"
 eval "$(starship init zsh)"
+typeset -gaU precmd_functions chpwd_functions
 
 echo -ne "\e[6 q"
 
@@ -130,12 +133,12 @@ export PATH=$PATH:~/go/bin
 
 
 # Generated for pdtm. Do not edit.
-export PATH=$PATH:/home/xacce/.pdtm/go/bin
+export PATH=$PATH:$HOME/.pdtm/go/bin
 
 
 
 # Generated for pdtm. Do not edit.
-export PATH=$PATH:/home/xacce/go
+export PATH=$PATH:$HOME/go
 
 export PATH="$HOME/.cargo/bin:$PATH"
 
@@ -146,12 +149,14 @@ alias ff="fastfetch"
 export GTK_THEME=Arc-Darker
 
 # Created by `pipx` on 2025-11-14 07:15:28
-export PATH="$PATH:/home/xacce/.local/bin"
+export PATH="$PATH:$HOME/.local/bin"
 export PATH=~/.npm-global/bin:$PATH
 
-# opencode
-export PATH=/home/xacce/.opencode/bin:$PATH
 
 export PATH="$HOME/.local/share/gem/ruby/3.4.0/bin:$PATH"
-export PATH="$HOME/.local/share/gem/ruby/3.4.0/bin:$PATH"
 eval "$(rbenv init -)"
+export NODE_PATH=$(npm root -g)
+
+# opencode
+export PATH=$HOME/.opencode/bin:$PATH
+export PATH="$HOME/.bun/bin:$PATH"

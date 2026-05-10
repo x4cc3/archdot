@@ -12,11 +12,15 @@ threshhold_red=100
 # Calculate available updates pacman and aur
 # -----------------------------------------------------
 
-if ! updates_arch=$(checkupdates 2> /dev/null | wc -l ); then
+if command -v checkupdates >/dev/null 2>&1; then
+    updates_arch=$(checkupdates 2> /dev/null | wc -l)
+else
     updates_arch=0
 fi
 
-if ! updates_aur=$(yay -Qua | wc -l); then
+if command -v yay >/dev/null 2>&1; then
+    updates_aur=$(yay -Qua 2> /dev/null | wc -l)
+else
     updates_aur=0
 fi
 

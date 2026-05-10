@@ -5,7 +5,7 @@ Personal desktop configuration for Hyprland on Arch Linux.
 ## Contents
 
 ### Window Manager & UI
-- `hypr/` — Hyprland core configs (`hyprland.conf`, `conf/*.conf`, `hyprlock.conf`, `hypridle.conf`, `hyprpaper.conf`)
+- `hypr/` — Hyprland core configs (`hyprland.conf`, `conf/*.conf`, `hyprlock.conf`, `hypridle.conf`)
 - `hyprfloat/` — floating rules for terminals
 - `waybar/` — status bar configuration, styles, modules
 - `rofi/` — launchers, powermenu themes, applets
@@ -83,23 +83,6 @@ ln -s $PWD/zsh/.zshrc ~/.zshrc
 # ... etc
 ```
 
-## Hyprland Plugins (hyprpm)
-
-After setting up, install the required plugin:
-
-```bash
-hyprpm add https://github.com/gfhdhytghd/hymission
-hyprpm enable hymission
-```
-
-[hymission](https://github.com/gfhdhytghd/hymission) provides a mission control / task switcher view. Keybinds are configured in `hypr/conf/custom.conf`:
-
-| Keybind | Action |
-|---|---|
-| `SUPER + TAB` | Toggle mission control |
-| `SUPER + SHIFT + TAB` | Open mission control |
-| `SUPER + CTRL + TAB` | Close mission control |
-
 ## Key Features
 
 - **Hyprland** with NVIDIA optimizations, Oxocarbon theme
@@ -108,7 +91,7 @@ hyprpm enable hymission
 - **Starship** Oxocarbon-colored prompt
 - **Waybar** with system stats, updates, keyboard layout
 - **Rofi** with Oxocarbon color scheme
-- **hymission** plugin for mission control
+
 
 ## Restoring
 1. Clone your repo

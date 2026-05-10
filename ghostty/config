@@ -34,5 +34,4 @@ window-decoration = false
 window-padding-x = 5
 window-padding-y = 5
 
-gtk-single-instance = true
-window-theme = ghostty
+gtk-tabs-location = bottom

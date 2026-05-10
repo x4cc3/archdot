@@ -142,18 +142,18 @@ install_packages() {
   fi
 
   local pacman_pkgs=(
-    git base-devel stow jq pacman-contrib
+    git base-devel jq pacman-contrib
     zsh fzf zoxide fastfetch starship
     go rustup npm rbenv pipx python
     ly
     hyprland hypridle hyprlock waybar rofi-wayland wl-clipboard cliphist dunst polkit-gnome
-    xdg-desktop-portal-hyprland xdg-desktop-portal qt5-wayland qt6-wayland
+    xdg-desktop-portal-hyprland xdg-desktop-portal xdg-desktop-portal-gtk qt5-wayland qt6-wayland
     pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber pavucontrol playerctl
     network-manager-applet blueman
     ghostty firefox thunar code spotify-launcher
-    ttf-jetbrains-mono ttf-fira-code ttf-font-awesome noto-fonts-emoji papirus-icon-theme
+    ttf-jetbrains-mono-nerd ttf-fira-code ttf-font-awesome noto-fonts-emoji papirus-icon-theme
     wlogout swappy grim slurp imagemagick qalculate-gtk xclip brightnessctl
-    swww libnotify
+    libnotify
   )
 
   local aur_pkgs=(
@@ -161,6 +161,7 @@ install_packages() {
     zen-browser-bin
     webcord
     caffeine-ng
+    awww
   )
 
   log "Installing official repository packages"
@@ -225,6 +226,23 @@ enable_services() {
   done
 }
 
+deploy_default_wallpaper() {
+  if [[ -f "$HOME/Pictures/default.png" ]]; then
+    log "Default wallpaper already exists at ~/Pictures/default.png"
+    return
+  fi
+
+  local src="$DOTFILES_DIR/wallpapers/1920x1080-dark-linux.png"
+  if [[ ! -f "$src" ]]; then
+    warn "No default wallpaper found in repo wallpapers/"
+    return
+  fi
+
+  run mkdir -p "$HOME/Pictures"
+  run cp "$src" "$HOME/Pictures/default.png"
+  log "Deployed default wallpaper to ~/Pictures/default.png"
+}
+
 set_default_shell() {
   if [[ "$SKIP_SHELL" -eq 1 ]]; then
     log "Skipping shell change"
@@ -271,6 +289,7 @@ main() {
   preflight
   install_packages
   deploy_dotfiles
+  deploy_default_wallpaper
   enable_services
   set_default_shell
   postflight

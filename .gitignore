@@ -34,3 +34,6 @@ dist/
 build/
 .idea/
 .DS_Store
+
+# Upstream source clones
+waybar/waybar_repo/
