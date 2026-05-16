@@ -1,15 +1,15 @@
 add_newline = false
 
 [character]
-success_symbol = '[\$](bold #42be65)'
-error_symbol = '[\$](bold #ee5396)'
+success_symbol = '[❯](bold #3ddbd9)'
+error_symbol = '[↝](bold #ee5396)'
 
 [directory]
-style = 'bold #78a9ff'
+style = 'bold #3ddbd9'
 truncation_length = 3
 
 [git_branch]
-style = 'bold #be95ff'
+style = 'bold #ff7eb6'
 
 [git_status]
 style = '#f1c21b'

@@ -1,21 +1,23 @@
 /* wlogout — Oxocarbon theme */
 
 window {
-    font-family: "JetBrainsMono Nerd Font", monospace;
+    font-family: "JetBrainsMono Nerd Font Mono", monospace;
     font-size: 16pt;
     color: #f2f4f8;
-    background-color: rgba(18, 18, 18, 0.7);
+    background-color: rgba(18, 18, 18, 0.82);
 }
 
 button {
+    min-width: 170px;
+    min-height: 170px;
     background-repeat: no-repeat;
-    background-position: center;
-    background-size: 20%;
+    background-position: center 36%;
+    background-size: 34%;
     background-color: transparent;
-    border-radius: 16px;
+    border-radius: 0px;
     outline: none;
     border: 1px solid transparent;
-    transition: all 0.2s ease;
+    transition: background-color 0.10s ease, border-color 0.10s ease;
 }
 
 button:hover {
@@ -25,12 +27,13 @@ button:hover {
 
 button:active,
 button:focus {
-    box-shadow: 0 0 8px rgba(130, 170, 255, 0.3);
+    box-shadow: none;
     border-color: #82aaff;
 }
 
 button span {
-    font-size: 1.2em;
+    font-size: 1.1em;
+    margin-top: 100px;
 }
 
 #lock {

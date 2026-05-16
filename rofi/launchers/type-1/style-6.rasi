@@ -56,7 +56,7 @@ window {
     location:                    center;
     anchor:                      center;
     fullscreen:                  false;
-    width:                       800px;
+    width:                       860px;
     x-offset:                    0px;
     y-offset:                    0px;
 
@@ -65,8 +65,8 @@ window {
     margin:                      0px;
     padding:                     0px;
     border:                      0px solid;
-    border-radius:               10px;
-    border-color:                @border-colour;
+    border-radius:               0px;
+    border-color:                #f2f4f833;
     cursor:                      "default";
     /* Backgroud Colors */
     background-color:            @background-colour;
@@ -83,9 +83,9 @@ window {
 /*****----- Main Box -----*****/
 mainbox {
     enabled:                     true;
-    spacing:                     10px;
+    spacing:                     8px;
     margin:                      0px;
-    padding:                     20px;
+    padding:                     16px;
     border:                      0px solid;
     border-radius:               0px 0px 0px 0px;
     border-color:                @border-colour;
@@ -96,7 +96,7 @@ mainbox {
 /*****----- Inputbar -----*****/
 inputbar {
     enabled:                     true;
-    spacing:                     10px;
+    spacing:                     8px;
     margin:                      0px;
     padding:                     0px;
     border:                      0px solid;
@@ -114,7 +114,7 @@ prompt {
 }
 textbox-prompt-colon {
     enabled:                     true;
-    padding:                     5px 0px;
+    padding:                     3px 0px;
     expand:                      false;
     str:                         "";
     background-color:            inherit;
@@ -122,7 +122,7 @@ textbox-prompt-colon {
 }
 entry {
     enabled:                     true;
-    padding:                     5px 0px;
+    padding:                     3px 0px;
     background-color:            inherit;
     text-color:                  inherit;
     cursor:                      text;
@@ -158,7 +158,7 @@ case-indicator {
 listview {
     enabled:                     true;
     columns:                     1;
-    lines:                       8;
+    lines:                       9;
     cycle:                       true;
     dynamic:                     true;
     scrollbar:                   false;
@@ -167,7 +167,7 @@ listview {
     fixed-height:                true;
     fixed-columns:               true;
     
-    spacing:                     5px;
+    spacing:                     4px;
     margin:                      0px;
     padding:                     0px;
     border:                      0px solid;
@@ -187,11 +187,11 @@ scrollbar {
 /*****----- Elements -----*****/
 element {
     enabled:                     true;
-    spacing:                     10px;
+    spacing:                     8px;
     margin:                      0px;
     padding:                     10px;
     border:                      0px solid;
-    border-radius:               8px;
+    border-radius:               0px;
     border-color:                @border-colour;
     background-color:            transparent;
     text-color:                  @foreground-colour;
@@ -236,7 +236,7 @@ element alternate.active {
 element-icon {
     background-color:            transparent;
     text-color:                  inherit;
-    size:                        24px;
+    size:                        28px;
     cursor:                      inherit;
 }
 element-text {

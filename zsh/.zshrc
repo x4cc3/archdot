@@ -1,5 +1,5 @@
 # Set the directory we want to store zinit and plugins
-ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git}"
 
 # Download Zinit, if it's not there yet
 if [ ! -d "$ZINIT_HOME" ]; then
@@ -124,21 +124,18 @@ eval "$(zoxide init --cmd cd zsh)"
 precmd() { precmd() { echo "" } }
 alias clear="precmd() { precmd() { echo } } && clear"
 eval "$(starship init zsh)"
-typeset -gaU precmd_functions chpwd_functions
-
-echo -ne "\e[6 q"
 
 alias pip=pip3
 export PATH=$PATH:~/go/bin
 
 
 # Generated for pdtm. Do not edit.
-export PATH=$PATH:$HOME/.pdtm/go/bin
+export PATH=$PATH:/home/xacce/.pdtm/go/bin
 
 
 
 # Generated for pdtm. Do not edit.
-export PATH=$PATH:$HOME/go
+export PATH=$PATH:/home/xacce/go
 
 export PATH="$HOME/.cargo/bin:$PATH"
 
@@ -146,10 +143,10 @@ alias vol2="python2 ~/volatility/vol.py"
 
 alias ff="fastfetch"
 
-export GTK_THEME=Arc-Darker
+export GTK_THEME=Graphite-blue-Dark-compact
 
 # Created by `pipx` on 2025-11-14 07:15:28
-export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:/home/xacce/.local/bin"
 export PATH=~/.npm-global/bin:$PATH
 
 
@@ -158,5 +155,6 @@ eval "$(rbenv init -)"
 export NODE_PATH=$(npm root -g)
 
 # opencode
-export PATH=$HOME/.opencode/bin:$PATH
+export PATH=/home/xacce/.opencode/bin:$PATH
 export PATH="$HOME/.bun/bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"

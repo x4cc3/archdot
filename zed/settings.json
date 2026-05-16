@@ -1,0 +1,52 @@
+// Zed settings
+// https://zed.dev/docs/configuring-zed
+{
+  "base_keymap": "VSCode",
+  "theme": {
+    "mode": "system",
+    "light": "Ayu Light",
+    "dark": "Oxocarbon Dark (IBM Carbon)"
+  },
+  "ui_font_size": 20,
+  "buffer_font_size": 19,
+  "buffer_font_family": "JetBrainsMono Nerd Font Mono",
+  "minimap": {
+    "show": "never"
+  },
+  "project_panel": {
+    "dock": "left"
+  },
+  "session": {
+    "trust_all_worktrees": true
+  },
+  "agent": {
+    "default_model": {
+      "effort": "medium",
+      "provider": "openai-subscribed",
+      "model": "gpt-5.5",
+      "enable_thinking": true
+    },
+    "dock": "right",
+    "sidebar_side": "right",
+    "favorite_models": [],
+    "model_parameters": [],
+    "agent_ui_font_size": 20,
+    "agent_buffer_font_size": 19
+  },
+  "agent_servers": {
+    "pi-acp": {
+      "type": "registry"
+    },
+    "codex-acp": {
+      "type": "registry"
+    }
+  },
+  "lsp": {
+    "ruff": {
+      "binary": {
+        "path": "/home/xacce/.local/bin/ruff",
+        "arguments": ["server"]
+      }
+    }
+  }
+}

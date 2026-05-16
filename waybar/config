@@ -1,10 +1,10 @@
 {
     "layer": "top",
-    "position": "top",
-    "height": 24,
-    "margin-top": 0,
-    "margin-left": 5,
-    "margin-right": 5,
+    "position": "bottom",
+    "height": 28,
+    "margin-bottom": 3,
+    "margin-left": 8,
+    "margin-right": 8,
     "spacing": 0,
     "modules-left": [
         "custom/terminal",
@@ -34,7 +34,7 @@
         "on-click": "activate",
         "format": "{id}",
         "persistent-workspaces": {
-            "*": 5
+            "*": 3
         }
     },
     "hyprland/window": {
@@ -48,12 +48,13 @@
     },
     "custom/updates": {
         "format": "upd {}",
-        "exec": "$HOME/.config/scripts/updates.sh",
+        "exec": "$HOME/.config/waybar/scripts/updates.sh",
         "exec-if": "ping -c1 -W2 archlinux.org >/dev/null 2>&1",
         "return-type": "json",
         "interval": 3600,
+        "signal": 8,
         "tooltip": true,
-        "on-click": "ghostty -e yay -Syu"
+        "on-click": "$HOME/.config/waybar/scripts/update-click.sh"
     },
     "custom/vpn": {
         "format": "{}",
@@ -72,7 +73,7 @@
         "tooltip-format-ethernet": "iface: {ifname}\nip: {ipaddr}/{cidr}",
         "tooltip-format-disconnected": "no connection",
         "interval": 15,
-        "on-click": "nm-connection-editor"
+        "on-click": "sh -c 'pkill -x nm-connection-editor 2>/dev/null; nm-connection-editor'"
     },
     "cpu": {
         "format": "cpu {usage}%",
@@ -109,6 +110,7 @@
         "tooltip-format": "battery: {capacity}%\n{timeTo}\npower: {power:.1f}W"
     },
     "hyprland/language": {
+        "keyboard-name": "at-translated-set-2-keyboard",
         "format": "{}",
         "format-en": "en",
         "format-mn": "mn",
@@ -122,7 +124,8 @@
     },
     "tray": {
         "icon-size": 16,
-        "spacing": 3
+        "spacing": 3,
+        "show-passive-items": false
     },
     "pulseaudio": {
         "format": "vol {volume}%",
@@ -134,9 +137,9 @@
             ]
         },
         "max-volume": 100,
-        "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+        "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
         "on-click-right": "pavucontrol",
-        "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
-        "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%"
+        "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+",
+        "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
     }
 }

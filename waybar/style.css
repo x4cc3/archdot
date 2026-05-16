@@ -1,10 +1,10 @@
-@define-color bg rgba(18, 18, 18, 0.94);
-@define-color border rgba(255, 255, 255, 0.06);
+@define-color bg rgba(18, 18, 18, 0.78);
+@define-color border rgba(255, 255, 255, 0.08);
 @define-color text #f2f4f8;
 @define-color muted #6e6e6e;
-@define-color blue #82aaff;
+@define-color blue #ff7eb6;
 @define-color cyan #33b1ff;
-@define-color purple #be95ff;
+@define-color purple #ff7eb6;
 @define-color teal #3ddbd9;
 @define-color green #42be65;
 @define-color red #ee5396;
@@ -13,7 +13,7 @@
 
 * {
     font-family: "JetBrainsMono Nerd Font Mono", monospace;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 400;
     border: none;
     border-radius: 0;
@@ -23,7 +23,8 @@
 window#waybar {
     background: @bg;
     color: @text;
-    border-bottom: 1px solid @border;
+    border: 1px solid @border;
+    border-radius: 0;
 }
 
 window#waybar.hidden {
@@ -45,17 +46,17 @@ window#waybar.hidden {
 #tray {
     margin: 0;
     padding: 0 9px;
-    min-height: 24px;
+    min-height: 28px;
     color: @text;
     background: transparent;
 }
 
 /* ── left: prompt icon ── */
 #custom-terminal {
-    padding-left: 10px;
+    padding-left: 12px;
     padding-right: 12px;
     color: @blue;
-    font-size: 15px;
+    font-size: 16px;
 }
 
 /* ── workspaces ── */
@@ -65,14 +66,14 @@ window#waybar.hidden {
 }
 
 #workspaces button {
-    min-width: 24px;
+    min-width: 25px;
     min-height: 24px;
     margin: 2px 1px;
-    padding: 0 8px;
-    color: rgba(255, 255, 255, 0.50);
+    padding: 0 6px;
+    color: rgba(255, 255, 255, 0.54);
     background: transparent;
     border: none;
-    border-radius: 4px;
+    border-radius: 0;
     transition:
         color 0.12s ease,
         background 0.12s ease;
@@ -85,7 +86,7 @@ window#waybar.hidden {
 
 #workspaces button.active {
     color: @text;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 126, 182, 0.12);
 }
 
 #workspaces button.empty {
@@ -93,8 +94,8 @@ window#waybar.hidden {
 }
 
 #workspaces button.focused {
-    color: @cyan;
-    background: rgba(51, 177, 255, 0.1);
+    color: @blue;
+    background: rgba(255, 126, 182, 0.10);
 }
 
 #workspaces button.urgent {
@@ -132,6 +133,7 @@ window#waybar.hidden {
 /* ── active window ── */
 #window {
     margin-left: 8px;
+    padding-right: 6px;
     color: @text;
 }
 
@@ -145,6 +147,10 @@ window#waybar.empty #window {
 }
 
 /* ── updates ── */
+#custom-updates.green {
+    color: @green;
+}
+
 #custom-updates.yellow {
     color: @yellow;
 }
