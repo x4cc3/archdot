@@ -33,8 +33,8 @@ window {
     margin:                      0px;
     padding:                     0px;
     border:                      0px solid;
-    border-radius:               12px;
-    border-color:                @selected;
+    border-radius:               0px;
+    border-color:                #f2f4f833;
     background-color:            @background;
     cursor:                      "default";
 }
@@ -47,7 +47,7 @@ mainbox {
     padding:                     0px;
     border:                      0px solid;
     border-radius:               0px 0px 0px 0px;
-    border-color:                @selected;
+    border-color:                #f2f4f833;
     background-color:            transparent;
     children:                    [ "inputbar", "listview" ];
 }
@@ -60,9 +60,9 @@ inputbar {
     padding:                     15px;
     border:                      0px solid;
     border-radius:               0px;
-    border-color:                @selected;
-    background-color:            @selected;
-    text-color:                  @background;
+    border-color:                #f2f4f8;
+    background-color:            #f2f4f8;
+    text-color:                  #121212;
     children:                    [ "prompt", "entry" ];
 }
 
@@ -105,14 +105,14 @@ listview {
     padding:                     0px;
     border:                      0px solid;
     border-radius:               0px;
-    border-color:                @selected;
+    border-color:                #f2f4f833;
     background-color:            transparent;
     text-color:                  @foreground;
     cursor:                      "default";
 }
 scrollbar {
     handle-width:                5px ;
-    handle-color:                @selected;
+    handle-color:                #f2f4f8;
     border-radius:               0px;
     background-color:            @background-alt;
 }
@@ -125,7 +125,7 @@ element {
     padding:                     8px;
     border:                      0px solid;
     border-radius:               0px;
-    border-color:                @selected;
+    border-color:                #f2f4f833;
     background-color:            transparent;
     text-color:                  @foreground;
     cursor:                      pointer;
@@ -135,8 +135,8 @@ element normal.normal {
     text-color:                  @foreground;
 }
 element selected.normal {
-    background-color:            @background-alt;
-    text-color:                  @foreground;
+    background-color:            #f2f4f8;
+    text-color:                  #121212;
 }
 element-icon {
     background-color:            transparent;
@@ -157,8 +157,8 @@ element-text {
 error-message {
     padding:                     15px;
     border:                      2px solid;
-    border-radius:               12px;
-    border-color:                @selected;
+    border-radius:               0px;
+    border-color:                #f2f4f833;
     background-color:            @background;
     text-color:                  @foreground;
 }

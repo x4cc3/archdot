@@ -1,37 +1,38 @@
-# Oxocarbon dark with crisp amber + teal accents
+# Oxocarbon Dark (standard — matches desktop)
 background = #161616
 foreground = #f2f4f8
-cursor-color = #f2f4f8
-selection-background = #183030
+cursor-color = #ffffff
+cursor-text = #000000
+selection-background = #2a2a2a
 selection-foreground = #f2f4f8
 
-# 16 colors — amber highlight, teal structure
+# 16 colors — Oxocarbon Dark
 palette = 0=#161616
 palette = 1=#ee5396
 palette = 2=#42be65
-palette = 3=#ffd166
-palette = 4=#3ddbd9
-palette = 5=#3ddbd9
-palette = 6=#3ddbd9
+palette = 3=#f1c21b
+palette = 4=#82aaff
+palette = 5=#be95ff
+palette = 6=#33b1ff
 palette = 7=#dde1e6
 palette = 8=#525252
 palette = 9=#ee5396
-palette = 10=#6fdc8c
-palette = 11=#ffe08a
-palette = 12=#7de7e5
-palette = 13=#7de7e5
-palette = 14=#7de7e5
-palette = 15=#ffffff
+palette = 10=#42be65
+palette = 11=#f1c21b
+palette = 12=#78a9ff
+palette = 13=#be95ff
+palette = 14=#33b1ff
+palette = 15=#f2f4f8
 
 font-family = "JetBrainsMono Nerd Font Mono"
-font-size = 15
+font-size = 14.5
 
 cursor-style = block
 shell-integration-features = no-cursor
 resize-overlay = never
 background-opacity = 0.95
 window-decoration = false
-window-padding-x = 3
-window-padding-y = 3
+window-padding-x = 5
+window-padding-y = 5
 
 gtk-tabs-location = bottom

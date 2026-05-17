@@ -2,9 +2,9 @@
 @define-color border rgba(255, 255, 255, 0.08);
 @define-color text #f2f4f8;
 @define-color muted #6e6e6e;
-@define-color blue #ff7eb6;
+@define-color blue #82aaff;
 @define-color cyan #33b1ff;
-@define-color purple #ff7eb6;
+@define-color purple #be95ff;
 @define-color teal #3ddbd9;
 @define-color green #42be65;
 @define-color red #ee5396;
@@ -86,7 +86,7 @@ window#waybar.hidden {
 
 #workspaces button.active {
     color: @text;
-    background: rgba(255, 126, 182, 0.12);
+    background: rgba(255, 255, 255, 0.10);
 }
 
 #workspaces button.empty {
@@ -94,8 +94,8 @@ window#waybar.hidden {
 }
 
 #workspaces button.focused {
-    color: @blue;
-    background: rgba(255, 126, 182, 0.10);
+    color: @text;
+    background: rgba(255, 255, 255, 0.08);
 }
 
 #workspaces button.urgent {
