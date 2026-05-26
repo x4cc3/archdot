@@ -14,7 +14,7 @@ button {
     background-position: center 36%;
     background-size: 34%;
     background-color: transparent;
-    border-radius: 0px;
+    border-radius: 5px;
     outline: none;
     border: 1px solid transparent;
     transition: background-color 0.10s ease, border-color 0.10s ease;

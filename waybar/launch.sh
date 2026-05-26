@@ -18,10 +18,13 @@ fi
 # Quit all running waybar instances
 # -----------------------------------------------------
 pkill -x waybar 2>/dev/null
+while pgrep -x waybar >/dev/null; do
+  sleep 0.1
+done
 # -----------------------------------------------------
 # Loading the configuration
 # -----------------------------------------------------
 config_file="config"
 style_file="style.css"
 
-waybar -c "$HOME/.config/waybar/$config_file" -s "$HOME/.config/waybar/$style_file" &
+waybar -c "$HOME/.config/waybar/$config_file" -s "$HOME/.config/waybar/$style_file" >/dev/null 2>&1 &

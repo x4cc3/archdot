@@ -18,7 +18,7 @@ cycle_wallpaper() {
     local wallpapers=()
     while IFS=  read -r -d $'\0'; do
         wallpapers+=("$REPLY")
-    done < <(find "$wallpaper_dir" -maxdepth 1 \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.webp" \) -type f -print0 | sort -z)
+    done < <(find "$wallpaper_dir" -maxdepth 1 \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" \) -type f -print0 | sort -z)
     
     if [ ${#wallpapers[@]} -eq 0 ]; then
         echo "No wallpapers found in $wallpaper_dir"
@@ -53,7 +53,7 @@ cycle_wallpaper() {
     # Save selected wallpaper to cache
     echo "$selected_wallpaper" > "$CACHE_FILE"
 
-    $HOME/.config/hypr/scripts/update_hyprlock_bg.sh "$selected_wallpaper"
+    "$HOME/.config/hypr/scripts/update_hyprlock_bg.sh" "$selected_wallpaper"
     
     echo "Wallpaper changed to: $selected_wallpaper"
 }

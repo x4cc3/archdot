@@ -161,7 +161,8 @@ install_packages() {
     hyprland hypridle hyprlock
     waybar rofi wl-clipboard cliphist dunst
     polkit-gnome xdg-desktop-portal-hyprland xdg-desktop-portal xdg-desktop-portal-gtk
-    qt5-wayland qt6-wayland
+    qt5-wayland qt6-wayland qt5ct qt6ct kvantum kvantum-qt5
+    gnome-settings-daemon dconf glib2
     pipewire pipewire-alsa pipewire-pulse wireplumber pavucontrol playerctl
     network-manager-applet blueman bluez bluez-utils
     ghostty firefox thunar code spotify-launcher
@@ -175,6 +176,7 @@ install_packages() {
     caffeine-ng
     wlogout
     awww
+    graphite-gtk-theme
   )
 
   if (( ENABLE_LY )); then
@@ -226,7 +228,7 @@ install_packages() {
 
 deploy_dotfiles() {
   local config_dirs=(
-    hypr hyprfloat waybar rofi dunst wlogout swappy scripts apps ghostty fastfetch gtk-4.0
+    hypr hyprfloat waybar rofi dunst wlogout swappy scripts ghostty fastfetch gtk-4.0
   )
 
   run mkdir -p "$HOME/.config"
@@ -247,9 +249,10 @@ deploy_dotfiles() {
   check_link "$DOTFILES_DIR/waybar" "$HOME/.config/waybar"
   check_link "$DOTFILES_DIR/rofi" "$HOME/.config/rofi"
 
-  if [[ -d "$DOTFILES_DIR/scripts" ]]; then
-    run find "$DOTFILES_DIR/scripts" -type f -name '*.sh' -exec chmod +x {} +
-  fi
+  local script_dir
+  for script_dir in "$DOTFILES_DIR/scripts" "$DOTFILES_DIR/hypr/scripts" "$DOTFILES_DIR/waybar/scripts"; do
+    [[ -d "$script_dir" ]] && run find "$script_dir" -type f -name '*.sh' -exec chmod +x {} +
+  done
 }
 
 deploy_gtk3_config() {
@@ -293,7 +296,11 @@ deploy_default_wallpaper() {
 
   run mkdir -p "$HOME/Pictures"
   run cp -- "$src" "$dst"
-  log "Installed default wallpaper to $dst"
+  if (( DRY_RUN )); then
+    log "[dry-run] Would install default wallpaper to $dst"
+  else
+    log "Installed default wallpaper to $dst"
+  fi
 }
 
 check_link() {

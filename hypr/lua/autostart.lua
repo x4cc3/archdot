@@ -1,0 +1,23 @@
+----------------
+-- Autostart
+----------------
+hl.on("hyprland.start", function()
+    hl.exec_cmd("~/.config/hypr/scripts/xdg.sh")
+    hl.exec_cmd("pgrep -f polkit-gnome-authentication-agent-1 >/dev/null || /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1")
+    hl.exec_cmd("~/.config/hypr/scripts/gtk.sh")
+    hl.exec_cmd("gsettings set org.gnome.desktop.interface gtk-theme 'Graphite-Dark-compact'")
+    hl.exec_cmd("[ -x /usr/lib/gnome-settings-daemon/gsd-xsettings ] && (pgrep -f gsd-xsettings >/dev/null || /usr/lib/gnome-settings-daemon/gsd-xsettings)")
+    hl.exec_cmd("pgrep -x hypridle >/dev/null || hypridle")
+    hl.exec_cmd("pgrep -f 'wl-paste --watch cliphist store' >/dev/null || wl-paste --watch cliphist store")
+    hl.exec_cmd("pgrep -x awww-daemon >/dev/null || awww-daemon")
+    hl.exec_cmd("~/.config/hypr/scripts/restore_wallpaper.sh")
+    hl.exec_cmd("~/.config/waybar/launch.sh")
+    hl.exec_cmd("pgrep -x nm-applet >/dev/null || nm-applet")
+    hl.exec_cmd("pgrep -x blueman-applet >/dev/null || blueman-applet")
+    hl.exec_cmd("xrdb ~/.Xresources")
+    hl.exec_cmd("pgrep -x dunst >/dev/null || dunst")
+    hl.exec_cmd("pgrep -f 'gnome-keyring-daemon.*secrets' >/dev/null || gnome-keyring-daemon --start --components=secrets")
+    hl.exec_cmd("pgrep -x caffeine >/dev/null || caffeine")
+    hl.exec_cmd("hyprctl setcursor Bibata-Original-Classic 25")
+    hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=Hyprland XDG_SESSION_DESKTOP=Hyprland")
+end)

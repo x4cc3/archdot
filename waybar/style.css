@@ -2,19 +2,21 @@
 @define-color border rgba(255, 255, 255, 0.08);
 @define-color text #f2f4f8;
 @define-color muted #6e6e6e;
+@define-color accent #82aaff;
+@define-color accent-soft rgba(130, 170, 255, 0.10);
 @define-color blue #82aaff;
 @define-color cyan #33b1ff;
 @define-color purple #be95ff;
 @define-color teal #3ddbd9;
-@define-color green #42be65;
 @define-color red #ee5396;
+@define-color green #42be65;
 @define-color yellow #f1c21b;
 @define-color orange #ff6f00;
 
 * {
     font-family: "JetBrainsMono Nerd Font Mono", monospace;
-    font-size: 16px;
-    font-weight: 400;
+    font-size: 15px;
+    font-weight: 500;
     border: none;
     border-radius: 0;
     min-height: 0;
@@ -24,39 +26,40 @@ window#waybar {
     background: @bg;
     color: @text;
     border: 1px solid @border;
-    border-radius: 0;
+    border-radius: 5px;
 }
 
 window#waybar.hidden {
-    opacity: 0.1;
+    opacity: 0.2;
+}
+
+/* ── branding ── */
+#custom-xaccefy {
+    color: @accent;
+    padding-left: 8px;
+    padding-right: 10px;
+    min-height: 30px;
+    background: transparent;
 }
 
 /* ── all modules base ── */
-#custom-terminal,
-#custom-vpn,
-#custom-updates,
+#custom-xaccefy,
 #window,
-#language,
+#custom-updates,
+#custom-vpn,
 #network,
 #pulseaudio,
 #cpu,
 #memory,
 #battery,
 #clock,
-#tray {
+#tray,
+#language {
     margin: 0;
     padding: 0 9px;
-    min-height: 28px;
+    min-height: 30px;
     color: @text;
     background: transparent;
-}
-
-/* ── left: prompt icon ── */
-#custom-terminal {
-    padding-left: 12px;
-    padding-right: 12px;
-    color: @blue;
-    font-size: 16px;
 }
 
 /* ── workspaces ── */
@@ -66,73 +69,48 @@ window#waybar.hidden {
 }
 
 #workspaces button {
-    min-width: 25px;
-    min-height: 24px;
-    margin: 2px 1px;
-    padding: 0 6px;
-    color: rgba(255, 255, 255, 0.54);
+    min-width: 24px;
+    min-height: 26px;
+    margin: 2px 0;
+    padding: 0 7px;
+    color: @muted;
     background: transparent;
-    border: none;
+    border-bottom: 1px solid transparent;
     border-radius: 0;
     transition:
-        color 0.12s ease,
-        background 0.12s ease;
+        color 0.15s ease,
+        border-color 0.15s ease,
+        background 0.15s ease;
 }
 
 #workspaces button:hover {
     color: @text;
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.02);
 }
 
 #workspaces button.active {
     color: @text;
-    background: rgba(255, 255, 255, 0.10);
+    background: @accent-soft;
+    border-bottom-color: @accent;
 }
 
 #workspaces button.empty {
-    color: rgba(255, 255, 255, 0.25);
+    color: rgba(145, 154, 167, 0.65);
 }
 
 #workspaces button.focused {
     color: @text;
-    background: rgba(255, 255, 255, 0.08);
+    border-bottom-color: @blue;
 }
 
 #workspaces button.urgent {
     color: @red;
-    background: rgba(238, 83, 150, 0.15);
-    animation: blink-urgent 1s ease-in-out infinite;
-}
-
-@keyframes blink-urgent {
-    0% {
-        background: rgba(238, 83, 150, 0.15);
-    }
-    50% {
-        background: rgba(238, 83, 150, 0.05);
-    }
-    100% {
-        background: rgba(238, 83, 150, 0.15);
-    }
-}
-
-/* ── right module separators ── */
-#custom-updates,
-#custom-vpn,
-#language,
-#network,
-#pulseaudio,
-#cpu,
-#memory,
-#battery,
-#clock,
-#tray {
-    border-left: 1px solid rgba(255, 255, 255, 0.07);
+    border-bottom-color: @red;
 }
 
 /* ── active window ── */
 #window {
-    margin-left: 8px;
+    margin-left: 5px;
     padding-right: 6px;
     color: @text;
 }
@@ -209,12 +187,12 @@ window#waybar.empty #window {
 }
 
 #memory {
-    color: @purple;
+    color: @blue;
 }
 
 #cpu.warning,
 #memory.warning {
-    color: @yellow;
+    color: @accent;
 }
 
 #cpu.critical,
@@ -232,21 +210,8 @@ window#waybar.empty #window {
     color: @yellow;
 }
 
-@keyframes blink-critical {
-    0% {
-        color: @red;
-    }
-    50% {
-        color: @muted;
-    }
-    100% {
-        color: @red;
-    }
-}
-
 #battery.critical:not(.charging) {
     color: @red;
-    animation: blink-critical 1s ease-in-out infinite;
 }
 
 /* ── tray ── */
@@ -256,4 +221,16 @@ window#waybar.empty #window {
 
 #tray > .needs-attention {
     -gtk-icon-effect: highlight;
+}
+
+/* ── tooltip ── */
+tooltip {
+    background: rgba(18, 18, 18, 0.95);
+    border: 1px solid @border;
+    border-radius: 0;
+}
+
+tooltip label {
+    color: @text;
+    font-size: 13px;
 }

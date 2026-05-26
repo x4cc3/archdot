@@ -1,29 +1,38 @@
 #!/bin/bash
-config_file="$HOME/.config/hypr/conf/keybinding.conf"
-echo "Reading from: $config_file"
 
-keybinds=""
-
-# Detect Start String
-while read -r line; do
-  if [[ "$line" == "bind"* ]]; then
-    line="$(echo "$line" | sed 's/$mainMod/SUPER/g')"
-    line="$(echo "$line" | sed 's/bind = //g')"
-    line="$(echo "$line" | sed 's/bindm = //g')"
-
-    IFS='#'
-    read -a strarr <<<"$line"
-    kb_str=${strarr[0]}
-    cm_str=${strarr[1]}
-
-    IFS=','
-    read -a kbarr <<<"$kb_str"
-
-    item="${kbarr[0]} +${kbarr[1]}"$'  -  '"${cm_str:1}"
-    keybinds+=$item$'\n'
-  fi
-done <"$config_file"
-
-keybinds="${keybinds%$'\n'}"
-
-rofi -theme ~/.config/rofi/launchers/type-1/style-11.rasi -dmenu -i -markup -eh 2 -replace -p "Keybinds" <<<"$keybinds"
+rofi -theme ~/.config/rofi/launchers/type-1/style-11.rasi \
+  -dmenu \
+  -i \
+  -markup \
+  -eh 2 \
+  -replace \
+  -p "Keybinds" <<'KEYBINDS'
+SUPER + RETURN  -  Terminal (ghostty)
+SUPER + W       -  Browser
+SUPER + E       -  File manager
+SUPER + C       -  VSCode
+SUPER + D       -  WebCord
+SUPER + A       -  Spotify
+SUPER + Q       -  Close active window
+SUPER + F       -  Fullscreen
+SUPER + T       -  Toggle floating
+SUPER + S       -  Toggle split
+SUPER + H/J/K/L -  Focus window left/down/up/right
+SUPER + SHIFT + H/J/K/L - Move window left/down/up/right
+SUPER + P       -  Screenshot menu
+Print           -  Area screenshot to clipboard
+SHIFT + Print   -  Area screenshot to file
+CTRL + Print    -  Fullscreen screenshot to clipboard
+SUPER + X       -  Logout menu
+SUPER + SPACE   -  Application launcher
+ALT + SHIFT     -  Toggle keyboard layout
+SUPER + CTRL + H - Show keybindings
+SUPER + SHIFT + B - Reload waybar
+SUPER + SHIFT + R - Reload Hyprland config
+SUPER + CTRL + C - Clipboard manager
+SUPER + 1-0     -  Switch workspace 1-10
+SUPER + SHIFT + 1-0 - Move window to workspace 1-10
+SUPER + mouse wheel - Switch workspace
+SUPER + CTRL + Down - Next empty workspace
+SUPER + CTRL + W - Random wallpaper
+KEYBINDS

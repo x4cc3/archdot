@@ -126,35 +126,17 @@ alias clear="precmd() { precmd() { echo } } && clear"
 eval "$(starship init zsh)"
 
 alias pip=pip3
-export PATH=$PATH:~/go/bin
-
-
-# Generated for pdtm. Do not edit.
-export PATH=$PATH:/home/xacce/.pdtm/go/bin
-
-
-
-# Generated for pdtm. Do not edit.
-export PATH=$PATH:/home/xacce/go
-
-export PATH="$HOME/.cargo/bin:$PATH"
-
 alias vol2="python2 ~/volatility/vol.py"
-
 alias ff="fastfetch"
 
 export GTK_THEME=Graphite-blue-Dark-compact
 
-# Created by `pipx` on 2025-11-14 07:15:28
-export PATH="$PATH:/home/xacce/.local/bin"
-export PATH=~/.npm-global/bin:$PATH
-
-
+# User tool paths
+export PATH="$HOME/.pdtm/go/bin:$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.npm-global/bin:$HOME/go/bin:$HOME/.bun/bin:$PATH"
 export PATH="$HOME/.local/share/gem/ruby/3.4.0/bin:$PATH"
-eval "$(rbenv init -)"
-export NODE_PATH=$(npm root -g)
 
 # opencode
-export PATH=/home/xacce/.opencode/bin:$PATH
-export PATH="$HOME/.bun/bin:$PATH"
-export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.opencode/bin:$PATH"
+
+eval "$(rbenv init -)"
+export NODE_PATH=$(npm root -g)
