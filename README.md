@@ -17,11 +17,13 @@ Run as a normal user (with `sudo`), never as root.
 ### Useful options
 
 ```bash
-./install.sh --dry-run       # preview actions
-./install.sh --skip-packages  # config only
-./install.sh --skip-services  # skip service enablement
-./install.sh --skip-shell     # skip default shell change
-./install.sh --enable-ly      # enable ly display manager
+./install.sh --dry-run            # preview actions
+./install.sh --skip-packages      # config only
+./install.sh --skip-aur           # skip AUR packages
+./install.sh --skip-services      # skip service enablement
+./install.sh --skip-shell         # skip default shell change
+./install.sh --enable-ly          # enable ly display manager
+./install.sh --replace-conflicts  # replace known conflicting packages when needed
 ```
 
 ## What gets installed
@@ -34,10 +36,12 @@ Run as a normal user (with `sudo`), never as root.
 
 ## Install behavior
 
+- Installs official packages with `pacman -Syu --needed` and AUR packages with `yay`
 - Links config folders into `~/.config`
 - Links shell files to `~/.zshrc` and `~/.zshenv`
 - Deploys GTK3 config as files (with home-specific bookmark paths)
 - Copies default wallpaper to `~/Pictures/default.png` if missing
+- Sets a portable default monitor rule; edit `hypr/lua/monitor.lua` for fixed layouts
 - Optionally enables `NetworkManager`, `bluetooth`, and (optionally) `ly`
 - Sets `zsh` as default shell unless `--skip-shell`
 

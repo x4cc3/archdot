@@ -28,13 +28,13 @@
     ],
 
     "custom/xaccefy": {
-        "format": "[xcf]",
+        "format": "[xcfy]",
         "tooltip": false,
         "on-click": "rofi -show drun -replace -i -theme ~/.config/rofi/launchers/type-1/glass-compact.rasi"
     },
     "hyprland/workspaces": {
         "on-click": "activate",
-        "format": "{name}",
+        "format": "[{name}]",
         "sort-by-number": true,
         "show-empty": false,
         "all-outputs": true,
@@ -44,7 +44,7 @@
         "disable-scroll": true
     },
     "hyprland/window": {
-        "format": "{}",
+        "format": "[{}]",
         "max-length": 36,
         "separate-outputs": true,
         "rewrite": {
@@ -56,7 +56,7 @@
         }
     },
     "custom/updates": {
-        "format": "upd {}",
+        "format": "[upd {}]",
         "exec": "$HOME/.config/waybar/scripts/updates.sh",
         "exec-if": "ping -c1 -W2 archlinux.org >/dev/null 2>&1",
         "return-type": "json",
@@ -66,7 +66,7 @@
         "on-click": "$HOME/.config/waybar/scripts/update-click.sh"
     },
     "custom/vpn": {
-        "format": "{}",
+        "format": "[{}]",
         "exec": "$HOME/.config/waybar/scripts/vpn.sh",
         "return-type": "json",
         "interval": 30,
@@ -74,10 +74,10 @@
         "on-click": "$HOME/.config/waybar/scripts/vpn.sh copy"
     },
     "network": {
-        "format": "{ifname}",
-        "format-wifi": " {essid} [{signalStrength}%]",
-        "format-ethernet": " {ifname}",
-        "format-disconnected": " offline",
+        "format": "[{ifname}]",
+        "format-wifi": "[{essid} {signalStrength}%]",
+        "format-ethernet": "[{ifname}]",
+        "format-disconnected": "[offline]",
         "tooltip-format-wifi": "iface: {ifname}\nssid: {essid}\nsignal: {signalStrength}%\nip: {ipaddr}/{cidr}\nfreq: {frequency}GHz",
         "tooltip-format-ethernet": "iface: {ifname}\nip: {ipaddr}/{cidr}",
         "tooltip-format-disconnected": "no connection",
@@ -85,8 +85,8 @@
         "on-click": "sh -c 'pkill -x nm-connection-editor 2>/dev/null; nm-connection-editor'"
     },
     "cpu": {
-        "format": "cpu {usage}%",
-        "format-alt": "cpu {load}",
+        "format": "[cpu {usage}%]",
+        "format-alt": "[cpu {load}]",
         "interval": 5,
         "states": {
             "warning": 70,
@@ -96,8 +96,8 @@
         "tooltip-format": "cpu: {usage}%\nfreq: {avg_frequency}GHz\nload: {load}"
     },
     "memory": {
-        "format": "mem {percentage}%",
-        "format-alt": "mem {used:0.1f}G",
+        "format": "[mem {percentage}%]",
+        "format-alt": "[mem {used:0.1f}G]",
         "interval": 10,
         "states": {
             "warning": 75,
@@ -107,10 +107,10 @@
         "tooltip-format": "ram: {used:0.1f}/{total:0.1f}GiB\nswap: {swapUsed:0.1f}/{swapTotal:0.1f}GiB"
     },
     "battery": {
-        "format": "bat {capacity}%",
-        "format-charging": "bat {capacity}% ↑",
-        "format-plugged": "bat {capacity}% ⚡",
-        "format-alt": "bat {time}",
+        "format": "[bat {capacity}%]",
+        "format-charging": "[bat {capacity}% ↑]",
+        "format-plugged": "[bat {capacity}% ⚡]",
+        "format-alt": "[bat {time}]",
         "states": {
             "good": 90,
             "warning": 30,
@@ -119,15 +119,14 @@
         "tooltip-format": "battery: {capacity}%\n{timeTo}\npower: {power:.1f}W"
     },
     "hyprland/language": {
-        "keyboard-name": "at-translated-set-2-keyboard",
-        "format": "{}",
+        "format": "[{}]",
         "format-en": "en",
         "format-mn": "mn",
         "tooltip-format": "keyboard: {long}"
     },
     "clock": {
-        "format": "{:%H:%M}",
-        "format-alt": "{:%Y-%m-%d %H:%M}",
+        "format": "[{:%H:%M}]",
+        "format-alt": "[{:%Y-%m-%d %H:%M}]",
         "interval": 60,
         "tooltip-format": "<tt>{calendar}</tt>"
     },
@@ -137,8 +136,8 @@
         "show-passive-items": false
     },
     "pulseaudio": {
-        "format": "vol {volume}%",
-        "format-muted": "vol mute",
+        "format": "[vol {volume}%]",
+        "format-muted": "[vol mute]",
         "format-icons": {
             "default": [
                 "",

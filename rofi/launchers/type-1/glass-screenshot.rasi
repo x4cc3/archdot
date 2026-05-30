@@ -5,10 +5,10 @@ configuration {
 }
 
 * {
-    bg: rgba(18, 18, 18, 0.86);
-    panel: rgba(255, 255, 255, 0.04);
-    panel-hover: rgba(255, 255, 255, 0.07);
-    border: rgba(255, 255, 255, 0.10);
+    bg: rgba(18, 18, 18, 0.95);
+    panel: rgba(255, 255, 255, 0.10);
+    panel-hover: rgba(255, 255, 255, 0.18);
+    border: rgba(255, 255, 255, 0.16);
     text: #f2f4f8;
     muted: #919aa7;
     accent: #82aaff;
@@ -26,7 +26,7 @@ window {
     transparency: "real";
     location: center;
     anchor: center;
-    width: 420px;
+    width: 460px;
     y-offset: -20px;
     border: 1px;
     border-color: @border;
@@ -37,13 +37,13 @@ window {
 mainbox {
     children: [ "inputbar", "listview" ];
     padding: 12px;
-    spacing: 10px;
+    spacing: 8px;
     background-color: transparent;
 }
 
 inputbar {
     children: [ "entry" ];
-    padding: 8px 10px;
+    padding: 7px 10px;
     border: 1px;
     border-color: @border;
     border-radius: 5px;
@@ -64,12 +64,12 @@ listview {
     dynamic: false;
     fixed-height: true;
     scrollbar: false;
-    spacing: 4px;
+    spacing: 3px;
     background-color: transparent;
 }
 
 element {
-    padding: 8px 10px;
+    padding: 9px 10px;
     border: 1px;
     border-color: transparent;
     border-radius: 5px;
@@ -87,4 +87,8 @@ element-text {
     vertical-align: 0.5;
     background-color: transparent;
     text-color: inherit;
+}
+
+#entry {
+    placeholder: "capture";
 }

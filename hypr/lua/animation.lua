@@ -15,5 +15,5 @@ hl.animation({ leaf = "windows", enabled = true, speed = 1, bezier = "snappy", s
 hl.animation({ leaf = "windowsOut", enabled = true, speed = 1, bezier = "quick", style = "slide" })
 hl.animation({ leaf = "windowsMove", enabled = true, speed = 1, bezier = "snappy" })
 hl.animation({ leaf = "fade", enabled = true, speed = 1, bezier = "quick" })
-hl.animation({ leaf = "layers", enabled = true, speed = 1, bezier = "quick", style = "slide" })
-hl.animation({ leaf = "workspaces", enabled = true, speed = 1, bezier = "snappy", style = "slidefade" })
+hl.animation({ leaf = "layers", enabled = true, speed = 1, bezier = "quick" })
+hl.animation({ leaf = "workspaces", enabled = true, speed = 1, bezier = "snappy", style = "slide" })

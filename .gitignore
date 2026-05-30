@@ -21,12 +21,20 @@
 notion.db
 
 # Secrets / tokens (add your own patterns here)
+.env
+.env.*
+!.env.example
+.npmrc
+.pypirc
+.netrc
 *.key
 *.pem
 *.p12
 *.asc
 *.gpg
 *.age
+*.token
+*.secret
 
 # Node / build outputs
 node_modules/

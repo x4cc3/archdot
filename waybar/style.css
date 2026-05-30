@@ -1,11 +1,14 @@
-@define-color bg rgba(18, 18, 18, 0.78);
-@define-color border rgba(255, 255, 255, 0.08);
+@define-color bg #161616;
+@define-color bg-soft rgba(22, 23, 27, 0.74);
+@define-color border rgba(255, 255, 255, 0.12);
+@define-color border-strong rgba(255, 255, 255, 0.2);
+@define-color glass-surface rgba(255, 255, 255, 0.03);
 @define-color text #f2f4f8;
-@define-color muted #6e6e6e;
-@define-color accent #82aaff;
-@define-color accent-soft rgba(130, 170, 255, 0.10);
-@define-color blue #82aaff;
-@define-color cyan #33b1ff;
+@define-color muted #a8b0c0;
+@define-color accent #3ddbd9;
+@define-color accent-soft rgba(61, 219, 217, 0.10);
+@define-color blue #78a9ff;
+@define-color cyan #3ddbd9;
 @define-color purple #be95ff;
 @define-color teal #3ddbd9;
 @define-color red #ee5396;
@@ -18,28 +21,39 @@
     font-size: 15px;
     font-weight: 500;
     border: none;
-    border-radius: 0;
     min-height: 0;
 }
 
 window#waybar {
-    background: @bg;
+    background: linear-gradient(180deg, rgba(22, 22, 28, 0.78) 0%, rgba(22, 24, 28, 0.72) 100%);
+    background: @bg-soft;
     color: @text;
     border: 1px solid @border;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 6px 18px rgba(0, 0, 0, 0.22);
     border-radius: 5px;
 }
 
 window#waybar.hidden {
-    opacity: 0.2;
+    opacity: 0.16;
 }
 
 /* ── branding ── */
 #custom-xaccefy {
     color: @accent;
     padding-left: 8px;
-    padding-right: 10px;
+    padding-right: 8px;
     min-height: 30px;
+    border-radius: 0;
     background: transparent;
+    border: 1px solid transparent;
+    transition: all 220ms ease-in-out;
+}
+
+#custom-xaccefy:hover {
+    background: transparent;
+    border-color: @border-strong;
 }
 
 /* ── all modules base ── */
@@ -56,10 +70,15 @@ window#waybar.hidden {
 #tray,
 #language {
     margin: 0;
-    padding: 0 9px;
+    padding: 0 5px; /* Balanced: Wide enough to breathe, tight enough to feel cohesive */
     min-height: 30px;
     color: @text;
     background: transparent;
+    border-radius: 0;
+    border: 1px solid transparent;
+    transition:
+        all 220ms ease-in-out,
+        border-color 220ms ease-in-out;
 }
 
 /* ── workspaces ── */
@@ -71,26 +90,25 @@ window#waybar.hidden {
 #workspaces button {
     min-width: 24px;
     min-height: 26px;
-    margin: 2px 0;
-    padding: 0 7px;
+    margin: 0;
+    padding: 0 5px; /* Balanced spacing between individual workspace blocks */
     color: @muted;
     background: transparent;
-    border-bottom: 1px solid transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 0;
     transition:
-        color 0.15s ease,
-        border-color 0.15s ease,
-        background 0.15s ease;
+        all 220ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 #workspaces button:hover {
     color: @text;
-    background: rgba(255, 255, 255, 0.02);
+    background: transparent;
+    border-bottom-color: rgba(255, 255, 255, 0.22);
 }
 
 #workspaces button.active {
     color: @text;
-    background: @accent-soft;
+    background: transparent;
     border-bottom-color: @accent;
 }
 
@@ -110,8 +128,8 @@ window#waybar.hidden {
 
 /* ── active window ── */
 #window {
-    margin-left: 5px;
-    padding-right: 6px;
+    margin-left: 4px;
+    padding-right: 8px;
     color: @text;
 }
 
@@ -122,6 +140,7 @@ window#waybar.empty #window {
 /* ── clock ── */
 #clock {
     color: @text;
+    font-weight: 600;
 }
 
 /* ── updates ── */
@@ -169,7 +188,7 @@ window#waybar.empty #window {
 #custom-updates,
 #custom-vpn,
 #language {
-    transition: background 0.12s ease;
+    transition: all 180ms ease-in-out;
 }
 
 #cpu:hover,
@@ -179,7 +198,7 @@ window#waybar.empty #window {
 #custom-updates:hover,
 #custom-vpn:hover,
 #language:hover {
-    background: rgba(255, 255, 255, 0.04);
+    background: transparent;
 }
 
 #cpu {
@@ -215,6 +234,10 @@ window#waybar.empty #window {
 }
 
 /* ── tray ── */
+#tray {
+    padding: 0 8px;
+}
+
 #tray > .passive {
     -gtk-icon-effect: dim;
 }
@@ -226,8 +249,8 @@ window#waybar.empty #window {
 /* ── tooltip ── */
 tooltip {
     background: rgba(18, 18, 18, 0.95);
-    border: 1px solid @border;
-    border-radius: 0;
+    border: 1px solid @border-strong;
+    border-radius: 5px;
 }
 
 tooltip label {

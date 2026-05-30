@@ -33,11 +33,13 @@ finish_copy() {
 case $choice in
     $option1)
         geometry=$(slurp) || exit 0
+        sleep 0.12
         grim -g "$geometry" "$FILE" || exit 1
         finish_copy
     ;;
     $option2)
         geometry=$(slurp) || exit 0
+        sleep 0.12
         grim -g "$geometry" "$FILE" || exit 1
         finish_copy
         swappy -f "$FILE"

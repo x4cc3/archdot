@@ -44,7 +44,7 @@
   "lsp": {
     "ruff": {
       "binary": {
-        "path": "/home/xacce/.local/bin/ruff",
+        "path": "ruff",
         "arguments": ["server"]
       }
     }
