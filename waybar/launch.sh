@@ -27,4 +27,4 @@ done
 config_file="config"
 style_file="style.css"
 
-waybar -c "$HOME/.config/waybar/$config_file" -s "$HOME/.config/waybar/$style_file" >/dev/null 2>&1 &
+waybar -c "$HOME/.config/waybar/$config_file" -s "$HOME/.config/waybar/$style_file" > /tmp/waybar.log 2>&1 &

@@ -25,6 +25,9 @@ options="$option1\n$option2\n$option3\n$option4\n$option5"
 
 choice=$(echo -e "$options" | rofi -dmenu -replace -theme ~/.config/rofi/launchers/type-1/glass-screenshot.rasi -i -no-show-icons -l 5 -p "screenshot")
 
+# Wait for rofi to fully disappear before capturing
+sleep 0.25
+
 finish_copy() {
     wl-copy --type image/png < "$FILE"
     notify-send "Screenshot saved" "$NAME copied to clipboard"

@@ -1,5 +1,7 @@
 # Dotfiles
 
+![Preview](assets/preview.png)
+
 Personal Hyprland setup for Arch Linux.
 
 ## Install (quick)

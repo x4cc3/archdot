@@ -44,7 +44,7 @@
   "lsp": {
     "ruff": {
       "binary": {
-        "path": "ruff",
+        "path": "/home/xaccefy/.local/bin/ruff",
         "arguments": ["server"]
       }
     }

@@ -3,8 +3,8 @@
 ----------------
 hl.config({
     general = {
-        gaps_in = 4,
-        gaps_out = 8,
+        gaps_in = 3,
+        gaps_out = 5,
         border_size = 1,
         col = {
             active_border = "rgba(f2f4f8cc)",
@@ -12,11 +12,6 @@ hl.config({
         },
         layout = "dwindle",
     },
-})
-
-hl.layer_rule({
-    match = { namespace = "waybar" },
-    blur = true,
 })
 
 local function window_rule(spec)

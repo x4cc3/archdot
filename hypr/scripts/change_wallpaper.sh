@@ -16,7 +16,7 @@ change_wallpaper() {
     awww img "$wallpaper_path" "${AWWW_FLAGS[@]}"
     echo "$wallpaper_path" > "$HOME/.cache/current_wallpaper"
 
-    $HOME/.config/hypr/scripts/update_hyprlock_bg.sh "$wallpaper_path"
+    "$HOME/.config/hypr/scripts/update_hyprlock_bg.sh" "$wallpaper_path"
 }
 
 if [ $# -eq 1 ]; then

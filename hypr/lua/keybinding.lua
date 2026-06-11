@@ -43,6 +43,7 @@ hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd("~/.config/waybar/launch.sh")
 hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("~/.config/hypr/scripts/loadconfig.sh"), { desc = "Reload hyprland config" })
 hl.bind(mainMod .. " + CTRL + C", hl.dsp.exec_cmd("~/.config/scripts/cliphist.sh"), { desc = "Open clipboard manager" })
 
+
 -- Workspaces
 for i = 1, 10 do
     local key = i % 10

@@ -18,7 +18,7 @@ configuration {
     accent: #82aaff;
     urgent: #ee5396;
 
-    font: "JetBrainsMono Nerd Font Mono 12";
+    font: "JetBrainsMono Nerd Font Mono 13";
     background-color: transparent;
     text-color: @text;
     margin: 0;
@@ -30,7 +30,7 @@ window {
     transparency: "real";
     location: center;
     anchor: center;
-    width: 500px;
+    width: 600px;
     y-offset: -20px;
     border: 1px;
     border-color: @border;
@@ -65,7 +65,7 @@ entry {
 
 listview {
     columns: 1;
-    lines: 6;
+    lines: 8;
     dynamic: true;
     fixed-height: false;
     scrollbar: false;
@@ -98,7 +98,7 @@ element selected.active {
 }
 
 element-icon {
-    size: 20px;
+    size: 24px;
     background-color: transparent;
 }
 

@@ -1,16 +1,14 @@
 @define-color bg #161616;
-@define-color bg-soft rgba(22, 23, 27, 0.74);
+@define-color bg-soft rgba(22, 23, 27, 0.65);
 @define-color border rgba(255, 255, 255, 0.12);
 @define-color border-strong rgba(255, 255, 255, 0.2);
 @define-color glass-surface rgba(255, 255, 255, 0.03);
 @define-color text #f2f4f8;
 @define-color muted #a8b0c0;
 @define-color accent #3ddbd9;
-@define-color accent-soft rgba(61, 219, 217, 0.10);
+
 @define-color blue #78a9ff;
-@define-color cyan #3ddbd9;
 @define-color purple #be95ff;
-@define-color teal #3ddbd9;
 @define-color red #ee5396;
 @define-color green #42be65;
 @define-color yellow #f1c21b;
@@ -19,45 +17,30 @@
 * {
     font-family: "JetBrainsMono Nerd Font Mono", monospace;
     font-size: 15px;
-    font-weight: 500;
+    font-weight: 400;
     border: none;
     min-height: 0;
 }
 
 window#waybar {
-    background: linear-gradient(180deg, rgba(22, 22, 28, 0.78) 0%, rgba(22, 24, 28, 0.72) 100%);
-    background: @bg-soft;
+    background: @bg;
     color: @text;
     border: 1px solid @border;
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.08),
-        0 6px 18px rgba(0, 0, 0, 0.22);
-    border-radius: 5px;
+        0 8px 24px rgba(0, 0, 0, 0.32);
+    border-radius: 7px;
+    margin: 0 12px 8px 12px;
+}
+
+window#waybar > * {
+    -gtk-icon-effect: none;
 }
 
 window#waybar.hidden {
     opacity: 0.16;
 }
 
-/* ── branding ── */
-#custom-xaccefy {
-    color: @accent;
-    padding-left: 8px;
-    padding-right: 8px;
-    min-height: 30px;
-    border-radius: 0;
-    background: transparent;
-    border: 1px solid transparent;
-    transition: all 220ms ease-in-out;
-}
-
-#custom-xaccefy:hover {
-    background: transparent;
-    border-color: @border-strong;
-}
-
 /* ── all modules base ── */
-#custom-xaccefy,
 #window,
 #custom-updates,
 #custom-vpn,
@@ -70,60 +53,52 @@ window#waybar.hidden {
 #tray,
 #language {
     margin: 0;
-    padding: 0 5px; /* Balanced: Wide enough to breathe, tight enough to feel cohesive */
-    min-height: 30px;
+    padding: 0 4px; /* Balanced: Wide enough to breathe, tight enough to feel cohesive */
+    min-height: 25px;
     color: @text;
     background: transparent;
     border-radius: 0;
     border: 1px solid transparent;
     transition:
-        all 220ms ease-in-out,
-        border-color 220ms ease-in-out;
+        all 120ms ease-in-out,
+        border-color 120ms ease-in-out;
 }
 
 /* ── workspaces ── */
 #workspaces {
-    margin: 0 0 0 2px;
-    padding: 0;
+    margin: 0 0 0 6px;
+    padding: 2px;
 }
 
 #workspaces button {
-    min-width: 24px;
-    min-height: 26px;
-    margin: 0;
-    padding: 0 5px; /* Balanced spacing between individual workspace blocks */
+    min-width: 20px;
+    min-height: 22px;
+    margin: 0 1px 0 0;
+    padding: 0 4px;
     color: @muted;
     background: transparent;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 0;
+    border-radius: 4px;
     transition:
-        all 220ms cubic-bezier(0.22, 1, 0.36, 1);
+        all 120ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 #workspaces button:hover {
     color: @text;
-    background: transparent;
-    border-bottom-color: rgba(255, 255, 255, 0.22);
+    background: @glass-surface;
 }
 
 #workspaces button.active {
-    color: @text;
-    background: transparent;
-    border-bottom-color: @accent;
-}
-
-#workspaces button.empty {
-    color: rgba(145, 154, 167, 0.65);
+    color: @blue;
+    background: alpha(@blue, 0.12);
 }
 
 #workspaces button.focused {
     color: @text;
-    border-bottom-color: @blue;
 }
 
 #workspaces button.urgent {
     color: @red;
-    border-bottom-color: @red;
+    background: alpha(@red, 0.12);
 }
 
 /* ── active window ── */
@@ -158,7 +133,7 @@ window#waybar.empty #window {
 
 /* ── keyboard layout ── */
 #language {
-    color: @teal;
+    color: @muted;
 }
 
 /* ── network ── */
@@ -188,7 +163,7 @@ window#waybar.empty #window {
 #custom-updates,
 #custom-vpn,
 #language {
-    transition: all 180ms ease-in-out;
+    transition: all 120ms ease-in-out;
 }
 
 #cpu:hover,
@@ -198,11 +173,11 @@ window#waybar.empty #window {
 #custom-updates:hover,
 #custom-vpn:hover,
 #language:hover {
-    background: transparent;
+    background: @glass-surface;
 }
 
 #cpu {
-    color: @cyan;
+    color: @blue;
 }
 
 #memory {
@@ -211,7 +186,7 @@ window#waybar.empty #window {
 
 #cpu.warning,
 #memory.warning {
-    color: @accent;
+    color: @yellow;
 }
 
 #cpu.critical,
@@ -248,7 +223,7 @@ window#waybar.empty #window {
 
 /* ── tooltip ── */
 tooltip {
-    background: rgba(18, 18, 18, 0.95);
+    background: @bg;
     border: 1px solid @border-strong;
     border-radius: 5px;
 }

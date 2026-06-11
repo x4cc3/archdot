@@ -1,11 +1,17 @@
 ----------------
 -- Monitors
 ----------------
--- Portable default: use every connected monitor at its preferred mode.
--- For a fixed personal layout, replace this with per-output monitor blocks.
 hl.monitor({
-    output = "",
+    output = "eDP-1",
+    mode = "2560x1440@120",
+    position = "0x0",
+    scale = 1,
+})
+
+hl.monitor({
+    output = "HDMI-A-1",
     mode = "preferred",
     position = "auto",
-    scale = "auto",
+    scale = 1,
+    mirror = "eDP-1",
 })
