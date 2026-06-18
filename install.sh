@@ -356,7 +356,7 @@ deploy_gtk3_config() {
   fi
 
   if [[ -e "$dst" && ! -d "$dst" || -L "$dst" ]]; then
-    backup_target_if_needed "$dst" "$src"
+    backup_target_if_needed "$dst" ""
   fi
 
   run mkdir -p "$dst"

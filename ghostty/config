@@ -25,12 +25,12 @@ palette = 14=#33b1ff
 palette = 15=#f2f4f8
 
 font-family = "JetBrains Mono"
-font-size = 15
+font-size = 15.5
 
 cursor-style = block
 shell-integration-features = no-cursor
 resize-overlay = never
-background-opacity = 0.96
+background-opacity = 0.95
 window-decoration = false
 window-padding-x = 5
 window-padding-y = 5

@@ -1,6 +1,6 @@
-@define-color bg #161616;
+@define-color bg rgba(20, 20, 20, 0.65);
 @define-color bg-soft rgba(22, 23, 27, 0.65);
-@define-color border rgba(255, 255, 255, 0.12);
+@define-color border rgba(255, 255, 255, 0.2);
 @define-color border-strong rgba(255, 255, 255, 0.2);
 @define-color glass-surface rgba(255, 255, 255, 0.03);
 @define-color text #f2f4f8;
@@ -28,7 +28,7 @@ window#waybar {
     border: 1px solid @border;
     box-shadow:
         0 8px 24px rgba(0, 0, 0, 0.32);
-    border-radius: 7px;
+    border-radius: 0px;
     margin: 0 12px 8px 12px;
 }
 

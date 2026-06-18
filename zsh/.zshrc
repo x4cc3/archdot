@@ -59,61 +59,10 @@ zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
-# # ex = EXtractor for all kinds of archives
-# # usage: ex <file>
-ex ()
-{
-  if [ -f $1 ] ; then
-    case $1 in
-      *.tar.bz2)   tar xjf $1   ;;
-      *.tar.gz)    tar xzf $1   ;;
-      *.bz2)       bunzip2 $1   ;;
-      *.rar)       unrar x $1   ;;
-      *.gz)        gunzip $1    ;;
-      *.tar)       tar xf $1    ;;
-      *.tbz2)      tar xjf $1   ;;
-      *.tgz)       tar xzf $1   ;;
-      *.zip)       unzip $1     ;;
-      *.Z)         uncompress $1;;
-      *.7z)        7z x $1      ;;
-      *.deb)       ar x $1      ;;
-      *.tar.xz)    tar xf $1    ;;
-      *.tar.zst)   tar xf $1    ;;
-      *)           echo "'$1' cannot be extracted via ex()" ;;
-    esac
-  else
-    echo "'$1' is not a valid file"
-  fi
-}
 
-# Aliases
-alias ls='ls --color'
-alias vim='nvim'
-alias c='clear'
-alias ll='ls -la'
-alias update='sudo pacman -Syyu;yay -Su'
-alias cleanup='sudo pacman -Rns $(pacman -Qtdq);yay -Sc --noconfirm'
 
-# pacman unlock
-alias unlock="sudo rm /var/lib/pacman/db.lck"
-alias rmpacmanlock="sudo rm /var/lib/pacman/db.lck"
-
-# get fastest mirrors in your neighborhood
-alias mirror="sudo reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist"
-alias mirrord="sudo reflector --latest 30 --number 10 --sort delay --save /etc/pacman.d/mirrorlist"
-alias mirrors="sudo reflector --latest 30 --number 10 --sort score --save /etc/pacman.d/mirrorlist"
-alias mirrora="sudo reflector --latest 30 --number 10 --sort age --save /etc/pacman.d/mirrorlist"
-
-# Maven
-alias mvn-ci="mvn clean install"
-alias mvn-ci-sk="mvn clean install -DskipTests"
-alias mvn-it="mvn failsafe:integration-test"
-alias mvn-check-updates="mvn versions:display-property-updates"
-
-# neovim
-alias nvchad="NVIM_APPNAME=nvchad nvim"
-alias lazyvim="NVIM_APPNAME=lazyvim nvim"
-alias astronvim="NVIM_APPNAME=astronvim nvim"
+# Common Aliases and Functions
+[[ -f ~/.shell_common ]] && . ~/.shell_common
 
 # Shell integrations
 eval "$(fzf --zsh)"
@@ -125,18 +74,7 @@ precmd() { precmd() { echo "" } }
 alias clear="precmd() { precmd() { echo } } && clear"
 eval "$(starship init zsh)"
 
-alias pip=pip3
-alias vol2="python2 ~/volatility/vol.py"
-alias ff="fastfetch"
-
 export GTK_THEME=Graphite-blue-Dark-compact
-
-# User tool paths
-export PATH="$HOME/.pdtm/go/bin:$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.npm-global/bin:$HOME/go/bin:$HOME/.bun/bin:$PATH"
-export PATH="$HOME/.local/share/gem/ruby/3.4.0/bin:$PATH"
-
-# opencode
-export PATH="$HOME/.opencode/bin:$PATH"
 
 eval "$(rbenv init -)"
 export NODE_PATH=$(npm root -g)

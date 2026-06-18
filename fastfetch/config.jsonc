@@ -6,30 +6,30 @@
   "display": {
     "separator": "  ->  ",
     "color": {
-      "keys": "#82aaff",
-      "title": "#f2f4f8"
+      "keys": "#08bdba",
+      "title": "#f4f4f4"
     }
   },
   "modules": [
     {
       "type": "title",
       "color": {
-        "user": "#f2f4f8",
-        "at": "#6e6e6e",
-        "host": "#82aaff"
+        "user": "#f4f4f4",
+        "at": "#525252",
+        "host": "#08bdba"
       }
     },
     {
       "type": "os",
-      "keyColor": "#82aaff"
+      "keyColor": "#08bdba"
     },
     {
       "type": "kernel",
-      "keyColor": "#33b1ff"
+      "keyColor": "#78a9ff"
     },
     {
       "type": "host",
-      "keyColor": "#82aaff"
+      "keyColor": "#08bdba"
     },
     {
       "type": "uptime",
@@ -37,15 +37,15 @@
     },
     {
       "type": "packages",
-      "keyColor": "#33b1ff"
+      "keyColor": "#78a9ff"
     },
     {
       "type": "shell",
-      "keyColor": "#82aaff"
+      "keyColor": "#08bdba"
     },
     {
       "type": "terminal",
-      "keyColor": "#33b1ff"
+      "keyColor": "#78a9ff"
     },
     {
       "type": "cpu",
@@ -53,11 +53,11 @@
     },
     {
       "type": "gpu",
-      "keyColor": "#82aaff"
+      "keyColor": "#ff832b"
     },
     {
       "type": "memory",
-      "keyColor": "#33b1ff"
+      "keyColor": "#78a9ff"
     },
     {
       "type": "disk",

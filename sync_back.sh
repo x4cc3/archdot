@@ -3,7 +3,7 @@ set -euo pipefail
 
 DOTFILES_DIR="$HOME/.config/dotfiles"
 CONFIG_DIRS=(
-  hypr hyprfloat waybar rofi dunst wlogout swappy scripts ghostty fastfetch gtk-4.0 zed xsettingsd
+  hypr hyprfloat waybar rofi dunst wlogout swappy scripts ghostty fastfetch gtk-4.0 zed xsettingsd nvim fontconfig
 )
 
 for dir in "${CONFIG_DIRS[@]}"; do

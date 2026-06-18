@@ -1,34 +1,80 @@
-add_newline = false
+# ponytail: oxocarbon palette + Nerd Font icons, two-line prompt
+# base #161616 | surface #262626 | selection #393939 | text #f4f4f4
+# teal #08bdba | blue #78a9ff | purple #be95ff | green #42be65
+# pink #ee5396 | yellow #f1c21b | orange #ff832b | gray #525252
 
-[character]
-success_symbol = '[❯](bold #42be65)'
-error_symbol = '[❯](bold #ee5396)'
+format = """
+[](fg:#08bdba)\
+$directory\
+[](fg:#08bdba bg:#262626)\
+$git_branch\
+$git_status\
+[](fg:#262626 bg:#161616)\
+$nodejs\
+$python\
+$rust\
+$golang\
+$lua\
+$cmd_duration\
+[](fg:#161616)\
+$line_break\
+$character"""
+
+add_newline = true
 
 [directory]
-style = 'bold #78a9ff'
+style = "bg:#08bdba fg:#161616 bold"
+format = "[ $path ]($style)"
 truncation_length = 3
+truncation_symbol = "…/"
+home_symbol = "~"
 
 [git_branch]
-style = 'bold #be95ff'
+symbol = ""
+style = "bg:#262626 fg:#78a9ff"
+format = '[ $symbol $branch ]($style)'
 
 [git_status]
-style = '#f1c21b'
+style = "bg:#262626 fg:#ff832b"
+format = '[$all_status$ahead_behind ]($style)'
+
+[nodejs]
+symbol = ""
+style = "bg:#161616 fg:#42be65"
+format = '[ $symbol ($version) ]($style)'
+detect_files = ["package.json", ".nvmrc"]
+detect_folders = ["node_modules"]
+
+[python]
+symbol = ""
+style = "bg:#161616 fg:#f1c21b"
+format = '[ $symbol ($version) ]($style)'
+
+[rust]
+symbol = ""
+style = "bg:#161616 fg:#ee5396"
+format = '[ $symbol ($version) ]($style)'
+
+[golang]
+symbol = ""
+style = "bg:#161616 fg:#08bdba"
+format = '[ $symbol ($version) ]($style)'
+
+[lua]
+symbol = ""
+style = "bg:#161616 fg:#78a9ff"
+format = '[ $symbol ($version) ]($style)'
 
 [cmd_duration]
-style = '#525252'
+style = "bg:#161616 fg:#ff832b"
+format = '[ 󱎫 $duration ]($style)'
 min_time = 2_000
+show_milliseconds = false
+
+[character]
+success_symbol = "[›](bold #08bdba)"
+error_symbol = "[›](bold #ee5396)"
+vimcmd_symbol = "[‹](bold #78a9ff)"
 
 [package]
 disabled = true
-
-[nodejs]
-style = '#42be65'
-
-[python]
-style = '#f1c21b'
-
-[rust]
-style = '#ee5396'
-
-[golang]
-style = '#33b1ff'
